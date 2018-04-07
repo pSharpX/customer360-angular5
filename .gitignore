@@ -26,6 +26,14 @@ coverage
 # Bower dependency directory (https://bower.io/)
 bower_components
 
+# Jetbrains's IDEs directory
+.idea
+# Visual Studio Code directory
+.vs
+
+# Publish directory
+dist
+
 # node-waf configuration
 .lock-wscript
 

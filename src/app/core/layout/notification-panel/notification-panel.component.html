@@ -1,0 +1,25 @@
+<div class="w-notification-sidebar w-md-notification-sidebar" id="notification-sidebar" [@notificationState]="collapsed === true ? 'expanded': 'collapsed'">
+    <!-- Close Sidebar Button -->
+    <button id="dismiss" type="button" (click)="onCollapseSidebar()"  class="close" aria-label="Close">
+        <!-- <span aria-hidden="true">&times;</span> -->
+        <i class="fa fa-remove"></i>
+    </button>
+    <!-- Sidebar Header -->
+    <div class="sidebar-header">
+        <h3>Notification Panel <i class="fa fa-bell"></i></h3>
+    </div>
+    <!-- Sidebar Links -->
+    <ul class="list-unstyled components">
+        <li class="active"><a href="#">Inicio</a></li>
+        <li><a href="#">Notificaciones</a></li>
+        <li><!-- Link with dropdown items -->
+            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Paginas</a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li><a href="#">Mensajes</a></li>
+                <li><a href="#">Alertas</a></li>
+                <li><a href="#">Buzon</a></li>
+            </ul>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Contacto</a></li>
+    </ul>
+</div>

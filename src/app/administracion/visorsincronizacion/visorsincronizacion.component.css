@@ -1,0 +1,26 @@
+
+/* AJUSTE MOBILE */
+
+@media screen and (max-width:991px){
+    
+    .buttonSeparacion {
+        height: 42px;
+    }
+  
+  }    
+    
+  @media screen and (max-width:368px){
+  
+    .buttonSeparacion {
+        height: 42px;
+    }
+
+  }
+    
+  @media screen and (max-width:767px){
+    
+    .buttonSeparacion {
+        height: 42px;
+    }
+  
+  }

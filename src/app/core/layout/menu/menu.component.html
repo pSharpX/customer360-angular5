@@ -1,0 +1,72 @@
+<!-- Open Sidebar Button -->
+<button id="open" [@toggleState]="collapsed === true ? 'collapsed': 'expanded'" class="btn btn-primary" (click)="onCollapseSidebar()">
+  <i class="fa fa-navicon"></i>
+</button>
+<nav id="sidebar" [ngClass]="{ 'active': collapsed }" [@menuState]="collapsed === true ? 'expanded': 'collapsed'">
+  <!-- Close Sidebar Button -->
+  <div id="dismiss" (click)="onCollapseSidebar()">
+    <i class="fa fa-arrow-left"></i>
+  </div>
+  <!-- Sidebar Header -->
+  <div class="sidebar-header">
+    <h3>
+      <i class="fa fa-car mr-2"></i>Gildemeister</h3>
+  </div>
+  <!-- Sidebar Links -->
+  <ul class="list-unstyled components">
+    <li class="active">
+      <a href="#clienteSubmenu" data-toggle="collapse" aria-expanded="false">
+        <i class="fa fa-users"></i> Clientes</a>
+      <ng-template *ngIf="cliente">
+        <ul class="collapse list-unstyled" id="clienteSubmenu">
+          <li>
+            <a [routerLink]="['/clientes', cliente.id, 'cotizaciones']" routerLinkActive="active" href="#">TD/Cotizaciones</a>
+          </li>
+          <li>
+            <a [routerLink]="['/clientes', cliente.id, 'ventas']" routerLinkActive="active" href="#">Ventas y Servicios</a>
+          </li>
+          <li>
+            <a [routerLink]="['/clientes', cliente.id, 'campañas']" routerLinkActive="active" href="#">Campañas</a>
+          </li>
+          <li>
+            <a [routerLink]="['/clientes', cliente.id, 'reclamos']" routerLinkActive="active" href="#">Reclamos</a>
+          </li>
+          <li>
+            <a [routerLink]="['/clientes', cliente.id, 'citas']" routerLinkActive="active" href="#">Citas</a>
+          </li>
+        </ul>
+      </ng-template>
+    </li>
+    <li>
+      <!-- Link with dropdown items -->
+      <a href="#reporteSubmenu" data-toggle="collapse" aria-expanded="false">
+        <i class="fa fa-pie-chart"></i> Reportes</a>
+      <ul class="collapse list-unstyled" id="reporteSubmenu">
+        <li>
+          <a [routerLink]="['/reportes']" routerLinkActive="active" href="#">Clasificación de Clientes</a>
+        </li>
+        <li>
+          <a [routerLink]="['/reportes']" routerLinkActive="active" href="#">Seguimientos de Venta</a>
+        </li>
+        <li>
+          <a [routerLink]="['/reportes']" routerLinkActive="active" href="#">Cumplimiento de Objetivos</a>
+        </li>
+        <li>
+          <a [routerLink]="['/reportes']" routerLinkActive="active" href="#">Resumen de las Ventas</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#administracionSubmenu" data-toggle="collapse" aria-expanded="false">
+        <i class="fa fa-university"></i> Administración</a>
+      <ul class="collapse list-unstyled" id="administracionSubmenu">
+        <li>
+          <a [routerLink]="['/administracion']" routerLinkActive="active" href="#">Visor de Sincronización</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a [routerLink]="['/reportes']" routerLinkActive="active" href="#">Otros</a>
+    </li>
+  </ul>
+</nav>

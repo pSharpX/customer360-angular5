@@ -1,0 +1,51 @@
+:host{
+  display: block;
+  position: relative;
+}
+
+.router-active{
+  color: inherit;
+  background-color: inherit;
+  border-color: transparent;
+  /* border-bottom: 2px solid #006BB9; */
+}
+
+.router-active::after{
+  transform: scale(1);
+}
+
+.sticky-top{
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  z-index: 1020 !important;
+  background-color: #F4F4F4;
+
+}
+
+.sticky-top nav {
+  background-color: #F4F4F4;
+  box-shadow: 1px 1px 1px #ddd;
+  margin-bottom: 2px;
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  /* height: 2.75rem; */
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  /* padding-bottom: 1rem; */
+  margin-top: -1px;
+  overflow-x: auto;
+  color: rgba(255, 255, 255, .75);
+  text-align: center;
+  /* white-space: nowrap; */
+  -webkit-overflow-scrolling: touch;
+}

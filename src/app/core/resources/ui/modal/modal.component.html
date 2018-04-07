@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <span class="title-text"> {{ settings?.title }} </span>
+  <button type="button" class="close" aria-label="Close" (click)="close('close by dismiss')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p class="text-center">{{ settings?.message }}</p>
+</div>
+<div class="modal-footer">
+  <div class="btn-group-sm">
+    <button *ngFor="let button of settings?.buttons" type="button" [id]="button.id" [class]="button.className"
+      (click)="button.click ? button.click() : close('close clicking close button')">
+      <i [ngClass]="['fa', button.iconClassName ? button.iconClassName: 'fa-thumbs-up']"></i> {{ button.text }}
+    </button>
+  </div>
+</div>

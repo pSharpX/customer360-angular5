@@ -1,0 +1,14 @@
+:host{
+  display: block;
+  position: relative;
+}
+
+.btn{
+  border-radius: 15px;
+  min-width: 100px;
+}
+
+.btn-group-sm .btn{
+  line-height: 1.6;
+  margin-left: 10px;
+}

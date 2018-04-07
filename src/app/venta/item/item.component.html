@@ -1,0 +1,103 @@
+<ng-container *ngIf="defaultView === 'list'">
+  <div [@routeAnimation] class="card-body">
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Descripción</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.nombreComercial}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Codigo</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.numeroNotaPedido}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Tipo</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.nombreTipoVenta}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Fecha Facturacion</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.fechaFacturacion}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Fecha Entrega</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.fechaEntrega}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Estado</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.estadoDespacho}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Fecha Estado</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.fechaEstimacionDespacho}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Punto de Venta</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.nombrePuntoVenta}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer bg-transparent">
+    <a class="btn btn-detail btn-primary btn-sm" role="button" [routerLink]="[item?.numeroNotaPedido, 'detail']" routerLinkActive="active">Ver Detalle</a>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="defaultView === 'table'">
+  <div [@routeAnimation] class="row">
+    <div class="col-12 col-md">
+      <p class="title mb-1">{{item.nombreComercial}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.numeroNotaPedido}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.nombreTipoVenta}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.fechaFacturacion}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.fechaEntrega}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.nombreEstadoComercial}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-2">{{item.fechaEstimacionDespacho}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <a class="btn btn-detail btn-primary btn-sm ie-btn-sm" role="button" [routerLink]="[item?.numeroNotaPedido, 'detail']" routerLinkActive="active">Ver Detalle</a>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="defaultView === 'thumbnail'">
+
+</ng-container>

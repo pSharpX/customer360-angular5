@@ -1,0 +1,16 @@
+<app-cliente-state [cliente]="cliente"></app-cliente-state>
+<!-- sticky-top nav-scroller  -->
+<div class="m-3">
+  <nav class="nav nav-tabs nav-fill">
+    <a #clienteRouteLink [routerLink]="['/clientes', cliente?.idCliente, 'detail']" [routerLinkActive]="'active'" class="nav-item nav-link" href="#">INFORMACION DEL CLIENTE</a>
+    <a [routerLink]="['/clientes', cliente?.idCliente ,'cotizaciones']" [routerLinkActive]="'active'" class="nav-item nav-link" href="#">TD/COTIZACIONES</a>
+    <a [routerLink]="['/clientes', cliente?.idCliente ,'ventas']" [routerLinkActive]="'active'" class="nav-item nav-link" href="#">VENTAS Y SERVICIOS</a>
+    <a [routerLink]="['/clientes', cliente?.idCliente ,'campanas']" [routerLinkActive]="'active'" class="nav-item nav-link" href="#">CAMPAÑAS</a>
+    <a [routerLink]="['/clientes', cliente?.idCliente ,'reclamos']" [routerLinkActive]="'active'" class="nav-item nav-link" href="#">RECLAMOS</a>
+    <a [routerLink]="['/clientes', cliente?.idCliente ,'citas']" [routerLinkActive]="'active'" class="nav-item nav-link" href="#">CITAS</a>
+  </nav>
+</div>
+
+<main [@routeAnimation]>
+  <router-outlet></router-outlet>
+</main>

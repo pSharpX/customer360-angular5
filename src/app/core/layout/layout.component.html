@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <app-menu [collapsed]="isMenuCollapsed" (onCollapseEvent)="onMenuCollapse($event)"></app-menu>
+  <app-notification-panel [collapsed]="isNotificationPanelCollapsed" (onCollapseEvent)="onNotificationPanelCollapse($event)"></app-notification-panel>
+  <div class="container content">
+    <app-header (collapse)="onNotificationPanelCollapse($event)" ></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </div>
+  <div [@overlayState]="(isMenuCollapsed === true || isNotificationPanelCollapsed === true) ? 'shown': 'hidden'" class="overlay" (click)="onCollapse()"></div>
+</div>

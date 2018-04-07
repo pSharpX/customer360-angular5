@@ -1,0 +1,65 @@
+<h4 class="title">VISOR DE SINCRONIZACIÓN</h4>
+<hr>
+<div class="card card-group">
+  <div class="col-12 px-0">
+    <div class="card-body">
+      <div class="row">
+        <div class="col col-md-1" style="padding-top: 6px;">
+          <label class="d-block text-left" for="servicio">Desde</label>
+        </div>
+        <div class="col-12 col-md-3">
+          <div class="input-group mb-1">
+            <input [(ngModel)]="valueFechaDesde" ngbDatepicker #dp="ngbDatepicker" placeholder="yyyy-mm-dd" readonly="readonly" type="text"
+              class="form-control form-control-sm">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-primary" (click)="dp.toggle()" type="button">
+                <i class="fa fa-calendar"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="col-12 col-md-1" style="padding-top: 6px;">
+          <label class="d-block text-left" for="servicio">Hasta</label>
+        </div>
+        <div class="col-12 col-md-3">
+          <div class="input-group mb-1">
+            <input [(ngModel)]="valueFechaHasta" ngbDatepicker #dp2="ngbDatepicker" placeholder="yyyy-mm-dd" readonly="readonly" type="text"
+              class="form-control form-control-sm">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-primary" (click)="dp2.toggle()" type="button">
+                <i class="fa fa-calendar"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="col-12 col-md-1" style="padding-top: 6px;">
+          <label class="d-block text-left" for="servicio">Estado</label>
+        </div>
+        <div class="col-12 col-md-3">
+          <div class="input-group mb-1">
+            <select id="estado" class="custom-select custom-select-sm mb-1" [(ngModel)]="opcionSelecEstado">
+              <option value="00">Seleccione</option>
+              <option *ngFor="let estado of listaEstadoSincronizacionDetalle | async" [value]="estado.codigo">
+                {{estado.descripcion}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-12 col-md-9"></div>
+        <div class="col-12 col-md-1">
+          <button class="btn  btn-primary" style="color:white;" (click)="onBuscarClick()">Buscar</button>
+        </div>     
+        <div class="buttonSeparacion"></div>   
+        <div class="col-12 col-md-1">
+          <button class="btn  btn-primary" style="color:white;" (click)="onSincronizar()" [disabled]="isDisabledSincronizar">Sincronizar</button>
+        </div>
+        <div class="col-12 " style="height: 10px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<app-grid (synEventChecked)="synStateButton($event)" [gridPersonalizada]="gridUpdate"></app-grid>

@@ -1,0 +1,196 @@
+<div class="backgroundSearch">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col d-flex align-items-end">
+          <h6 class="title">Resultados de la Búsqueda</h6>
+        </div>
+        <div class="col-12 col-md-4 d-flex align-items-end justify-content-end mb-2">
+          <div class="d-none d-md-block" style="padding-bottom: 5px;">
+            <i class="fa fa-users mr-2"></i>{{ gridPersonalizada.countReg }} Resultados</div>
+          <div class="btn-group btn-group-sm ml-0 ml-md-4" role="group">
+            <button class="btn btn-primary" (click)="exportarExcel($event)" [disabled]="gridPersonalizada.countReg==0?true:false">
+              <i class="fa fa-download mr-1"></i>
+              <span class="d-none d-md-inline">Exportar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="headerColumna d-none d-md-block">
+      <div class="pb-0">
+        <div class="row">
+          <div class="col-12 col-md" *ngFor="let column of gridPersonalizada.columns">
+            <div *ngIf="column.isHeaderType; then useHeaderType else noneHeaderType"></div>
+            <ng-template #useHeaderType>
+              <input type="checkbox" id="{{column.Id}}" (change)="onEventChange()"/>
+            </ng-template>
+            <ng-template #noneHeaderType>
+              <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+                <span class="col-header">{{ column.Name }}
+                  <div *ngIf="column.isOrder; then order else noorder"></div>
+                  <ng-template #order>
+                    <a [class]="classOrder" id="{{column.Id}}" (click)="orderColumn($event,column.Id,column.ind)"></a>
+                  </ng-template>
+                  <ng-template #noorder>
+                  </ng-template>
+                </span>
+              </p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let row of gridPersonalizada.rows; let rowIndex=index">
+      <div *ngIf="gridPersonalizada.sizePage > rowIndex">
+        <div *ngIf="gridPersonalizada.withDetail; then withrouterLink else withoutrouterLink"></div>
+        <ng-template #withoutrouterLink>
+          <a style="color: black;" class="d-block">
+            <div class="card">
+              <div class="card-body p-3 p-md-4">
+                <div class="row">
+                  <div *ngFor="let rowdata of row.rowData" class="col-12 col-md">
+                    <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isDesign; then template else data"></div>
+                    <ng-template #data>
+                      <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isContraer; then dataContraer else dataNone"></div>
+                      <ng-template #dataContraer>
+                        <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isOpenModal; then openModal else noneModal"></div>
+                        <ng-template #openModal>
+                          <div class="contraertexto" [style.color]="rowdata.styleColor" style="cursor: pointer;" (click)="openModalItemDetail($event,rowdata.data,gridPersonalizada.columns[rowdata.ind-1].isFormatJson)">{{ rowdata.data }}</div>
+                        </ng-template>
+                        <ng-template #noneModal>
+                          <div class="contraertexto" [style.color]="rowdata.styleColor">{{ rowdata.data }}</div>
+                        </ng-template>
+                      </ng-template>
+                      <ng-template #dataNone>
+                        <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isOpenModal; then openModal else noneModal"></div>
+                        <ng-template #openModal>
+                          <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isTextoVer; then verTexto else noneTexto"></div>
+                          <ng-template #verTexto>
+                            <a style="cursor: pointer;" (click)="openModalItemDetail($event,rowdata.data,gridPersonalizada.columns[rowdata.ind-1].isFormatJson)">Ver</a>
+                          </ng-template>
+                          <ng-template #noneTexto>
+                            <div style="cursor: pointer;" [style.color]="rowdata.styleColor" (click)="openModalItemDetail($event,rowdata.data,gridPersonalizada.columns[rowdata.ind-1].isFormatJson)">{{ rowdata.data }}</div>
+                          </ng-template>
+                        </ng-template>
+                        <ng-template #noneModal>
+                          <div [style.color]="rowdata.styleColor">{{ rowdata.data }}</div>
+                        </ng-template>
+                      </ng-template>
+                    </ng-template>
+                    <ng-template #template>
+                      <div [ngSwitch]="gridPersonalizada.columns[rowdata.ind-1].Type.name">
+                        <div *ngSwitchCase="checkbox">
+                          <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].Type.useValue; then useChk else noneChk"></div>
+                          <ng-template #useChk>
+                            <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isValueEl; then isValueEl else noneValueEl"></div>
+                            <ng-template #isValueEl>
+                              <input type="checkbox" id="chk{{row.i}}" [style.visibility]="rowdata.visibleChecked" value="{{rowdata.data}}" [checked]="rowdata.valueChecked"
+                                [disabled]="rowdata.valueEl">
+                            </ng-template>
+                            <ng-template #noneValueEl>
+                              <input type="checkbox" id="chk{{row.i}}" [style.visibility]="rowdata.visibleChecked" value="{{rowdata.data}}" [checked]="false" [disabled]="gridPersonalizada.columns[rowdata.ind-1].Type.disabled">
+                            </ng-template>
+                          </ng-template>
+                          <ng-template #noneChk>
+                            <input type="checkbox" id="chk{{row.i}}" [style.visibility]="rowdata.visibleChecked" [checked]="rowdata.data" [disabled]="gridPersonalizada.columns[rowdata.ind-1].Type.disabled">
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </ng-template>
+        <ng-template #withrouterLink>
+          <a [@routeAnimation]="true" [routerLink]="[row.key,'detail']" style="color: black;" class="d-block">
+            <div class="card">
+              <div class="card-body p-3 p-md-4">
+                <div class="row">
+                  <div *ngFor="let rowdata of row.rowData" class="col-12 col-md">
+                    <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isDesign; then template else data"></div>
+                    <ng-template #data>
+                      <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isContraer; then dataContraer else dataNone"></div>
+                      <ng-template #dataContraer>
+                        <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isOpenModal; then openModal else noneModal"></div>
+                        <ng-template #openModal>
+                          <div class="contraertexto" [style.color]="rowdata.styleColor" style="cursor: pointer;" (click)="openModalItemDetail($event,rowdata.data,gridPersonalizada.columns[rowdata.ind-1].isFormatJson)">{{ rowdata.data }}</div>
+                        </ng-template>
+                        <ng-template #noneModal>
+                          <div class="contraertexto" [style.color]="rowdata.styleColor">{{ rowdata.data }}</div>
+                        </ng-template>
+                      </ng-template>
+                      <ng-template #dataNone>
+                        <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isOpenModal; then openModal else noneModal"></div>
+                        <ng-template #openModal>
+                          <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isTextoVer; then verTexto else noneTexto"></div>
+                          <ng-template #verTexto>
+                            <a style="cursor: pointer;" (click)="openModalItemDetail($event,rowdata.data,gridPersonalizada.columns[rowdata.ind-1].isFormatJson)">Ver</a>
+                          </ng-template>
+                          <ng-template #noneTexto>
+                            <div style="cursor: pointer;" [style.color]="rowdata.styleColor" (click)="openModalItemDetail($event,rowdata.data,gridPersonalizada.columns[rowdata.ind-1].isFormatJson)">{{ rowdata.data }}</div>
+                          </ng-template>
+                        </ng-template>
+                        <ng-template #noneModal>
+                          <div [style.color]="rowdata.styleColor">{{ rowdata.data }}</div>
+                        </ng-template>
+                      </ng-template>
+                    </ng-template>
+                    <ng-template #template>
+                      <div [ngSwitch]="gridPersonalizada.columns[rowdata.ind-1].Type.name">
+                        <div *ngSwitchCase="checkbox">
+                          <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].Type.useValue; then useChk else noneChk"></div>
+                          <ng-template #useChk>
+                            <div *ngIf="gridPersonalizada.columns[rowdata.ind-1].isValueEl; then isValueEl else noneValueEl"></div>
+                            <ng-template #isValueEl>
+                              <input type="checkbox" id="chk{{row.i}}" [style.visibility]="rowdata.visibleChecked" value="{{rowdata.data}}" [checked]="rowdata.valueChecked"
+                                [disabled]="rowdata.valueEl">
+                            </ng-template>
+                            <ng-template #noneValueEl>
+                              <input type="checkbox" id="chk{{row.i}}" [style.visibility]="rowdata.visibleChecked" value="{{rowdata.data}}" [checked]="false" [disabled]="gridPersonalizada.columns[rowdata.ind-1].Type.disabled">
+                            </ng-template>
+                          </ng-template>
+                          <ng-template #noneChk>
+                            <input type="checkbox" id="chk{{row.i}}" [style.visibility]="rowdata.visibleChecked" [checked]="rowdata.data" [disabled]="gridPersonalizada.columns[rowdata.ind-1].Type.disabled">
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </ng-template>
+        <div class="separador"></div>
+      </div>
+    </div>
+    <nav aria-label="Page navigation" class="">
+      <ul class="pagination" style="float: right;">
+        <li class="page-item">
+          <a class="page-link" aria-label="Previous" style="cursor:pointer;" (click)="paginationGridPrevious()">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li *ngFor="let ind of getListPage(gridPersonalizada.countReg,gridPersonalizada.sizePage)" (click)="paginationGrid(ind)">
+          <div *ngIf="ind == gridPersonalizada.currentPage; then pageActive else pageSame"></div>
+          <ng-template #pageActive>
+            <a class="page-link" style="cursor:pointer;background-color: #ddd;">{{ ind }}</a>
+          </ng-template>
+          <ng-template #pageSame>
+            <a class="page-link" style="cursor:pointer;">{{ ind }}</a>
+          </ng-template>
+        </li>
+        <li class="page-item">
+          <a class="page-link" aria-label="Next" style="cursor:pointer;" (click)="paginationGridNext()">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <br>

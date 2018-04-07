@@ -1,0 +1,116 @@
+:host{
+  display: block;
+}
+
+header{
+  position: relative;
+  padding-top: 40px;
+}
+
+.avatar{
+  max-width: 32px;
+  min-height: 32px;
+}
+
+.fixed-top,
+.fixed-bottom,
+.fixed-left,
+.fixed-right{ position: fixed !important; z-index: 999 !important; top: inherit; bottom: inherit; left: inherit; right: inherit;}
+
+.fixed-top{ top: 0 !important; }
+.fixed-bottom{ bottom: 0 !important; }
+.fixed-left{ left: 0 !important; }
+.fixed-right{ right: 0 !important; }
+
+.fixed-xs-top { top: inherit; }
+.fixed-xs-bottom { bottom: inherit; }
+.fixed-xs-left { left: inherit; }
+.fixed-xs-right { right: inherit; }
+
+.fixed-sm-top { top: inherit; }
+.fixed-sm-bottom { bottom: inherit; }
+.fixed-sm-left { left: inherit; }
+.fixed-sm-right { right: inherit; }
+
+.fixed-md-top { top: inherit; }
+.fixed-md-bottom { bottom: inherit; }
+.fixed-md-left { left: inherit; }
+.fixed-md-right { right: inherit; }
+
+.fixed-lg-top { top: inherit; }
+.fixed-lg-bottom { bottom: inherit; }
+.fixed-lg-left { left: inherit; }
+.fixed-lg-right { right: inherit; }
+
+.fixed-xl-top { top: inherit; }
+.fixed-xl-bottom { bottom: inherit; }
+.fixed-xl-left { left: inherit; }
+.fixed-xl-right { right: inherit; }
+
+/* Extra small devices (portrait phones, less than 576px)*/
+/* No media query since this is the default in Bootstrap*/
+
+/* Extra Small devices (landscape phones, 364px and up)*/
+@media (min-width: 364px) {
+  .fixed-xs-top { top: 0 !important; }
+  .fixed-xs-bottom { bottom: 0 !important; }
+  .fixed-xs-left { left: 0 !important; }
+  .fixed-xs-right { right: 0 !important; }
+}
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .fixed-sm-top { top: 0 !important; }
+  .fixed-sm-bottom { bottom: 0 !important; }
+  .fixed-sm-left { left: 0 !important; }
+  .fixed-sm-right { right: 0 !important; }
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+  .fixed-md-top { top: 0 !important; }
+  .fixed-md-bottom { bottom: 0 !important; }
+  .fixed-md-left { left: 0 !important; }
+  .fixed-md-right { right: 0 !important; }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+  .fixed-lg-top { top: 0 !important; }
+  .fixed-lg-bottom { bottom: 0 !important; }
+  .fixed-lg-left { left: 0 !important; }
+  .fixed-lg-right { right: 0 !important; }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  .fixed-xl-top { top: 0 !important; }
+  .fixed-xl-bottom { bottom: 0 !important; }
+  .fixed-xl-left { left: 0 !important; }
+  .fixed-xl-right { right: 0 !important; }
+}
+
+.notification-open{
+  top: 80px !important;
+  right: -10px !important;
+}
+
+.notification-open:hover{
+  animation-duration: 900ms;
+  /* animation-fill-mode: both; */
+  animation-name: shake;
+}
+
+@keyframes shake {
+  from, to {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}

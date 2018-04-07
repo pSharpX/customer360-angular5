@@ -1,0 +1,209 @@
+:host {
+  /* width: 420px; */
+  position: fixed;
+  top: 0;
+  right: 0;
+  /* transform: translateX(100%); */
+  height: 100vh;
+  z-index: 9999;
+  background: #0271B5;
+  /* transition: all 0.3s; */
+}
+
+
+#notification-sidebar {
+  position: fixed;
+  top: 0;
+  /* right: 0px; */
+  height: 100vh;
+  z-index: 9999;
+  background: #fff;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+  /* boxShadow: '0px 2px 3px 2px #006BB9', */
+  overflow-y: scroll;
+}
+
+a, a:hover, a:focus {
+  color: inherit;
+  text-decoration: none;
+  /* transition: all 0.3s; */
+}
+
+#notification-sidebar .sidebar-header {
+  padding: 20px;
+  background-color: #0271B5;
+  color: #fff;
+
+}
+
+#notification-sidebar ul.components {
+  padding: 20px 0;
+  /* border-bottom: 1px solid #47748b; */
+}
+
+#notification-sidebar ul p {
+  color: #fff;
+  padding: 10px;
+}
+
+#notification-sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+}
+#notification-sidebar ul li a:hover {
+  color: #7386D5;
+  background: #fff;
+}
+
+#notification-sidebar ul li.active > a, a[aria-expanded="true"] {
+  color: #fff;
+  background-color: #006BB9;
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+  content: '\f078';
+  display: block;
+  position: absolute;
+  right: 20px;
+  font-family: 'FontAwesome';
+  font-size: 0.6em;
+}
+a[aria-expanded="true"]::before {
+  content: '\f077';
+}
+
+
+ul ul a {
+  font-size: 0.9em;
+  padding-left: 30px;
+  background-color: #014E7D;
+}
+
+ul.CTAs {
+  padding: 20px;
+}
+
+ul.CTAs a {
+  text-align: center;
+  font-size: 0.9em;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+a.download {
+  background: #fff;
+  color: #7386D5;
+}
+a.article, a.article:hover {
+  background: #6d7fcc;
+  color: #fff;
+}
+
+#dismiss {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #fff;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.close{
+  opacity: inherit;
+}
+
+.w-25{ width: 25% !important; }
+.w-50{ width: 50% !important; }
+.w-75, .w-notification-sidebar{ width: 80% !important; }
+.w-100{ width: 100% !important; }
+
+.w-xs-notification-sidebar,
+.w-xs-25,
+.w-xs-50,
+.w-xs-75,
+.w-xs-100 { width: inherit; }
+
+.w-sm-notification-sidebar,
+.w-sm-25,
+.w-sm-50,
+.w-sm-75,
+.w-sm-100 { width: inherit; }
+
+.w-md-notification-sidebar,
+.w-md-25,
+.w-md-50,
+.w-md-75,
+.w-md-100 { width: inherit ; }
+
+.w-lg-notification-sidebar,
+.w-lg-25,
+.w-lg-50,
+.w-lg-75,
+.w-lg-100 { width: inherit; }
+
+.w-xl-notification-sidebar,
+.w-xl-25,
+.w-xl-50,
+.w-xl-75,
+.w-xl-100 { width: inherit ; }
+
+/* Extra small devices (portrait phones, less than 576px)*/
+/* No media query since this is the default in Bootstrap*/
+
+/* Extra Small devices (landscape phones, 364px and up)*/
+@media (min-width: 364px) {
+  .w-xs-25{ width: 25% !important; }
+  .w-xs-50{ width: 50% !important; }
+  .w-xs-75, .w-xs-notification-sidebar{ width: 80% !important; }
+  .w-xs-100{ width: 100% !important; }
+}
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .w-sm-25{ width: 25% !important; }
+  .w-sm-50{ width: 50% !important; }
+  .w-sm-75, .w-sm-notification-sidebar{ width: 75% !important; }
+  .w-sm-100{ width: 100% !important; }
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+  .w-md-25{ width: 25% !important; }
+  .w-md-50{ width: 50% !important; }
+  .w-md-75{ width: 75% !important; }
+  .w-md-100{ width: 100% !important; }
+  .w-md-notification-sidebar{ width: 420px !important;}
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+  .w-lg-25{ width: 25% !important; }
+  .w-lg-50{ width: 50% !important; }
+  .w-lg-75{ width: 75% !important; }
+  .w-lg-100{ width: 100% !important; }
+  .w-lg-notification-sidebar{ width: 450px !important;}
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  .w-xl-25{ width: 25% !important; }
+  .w-xl-50{ width: 50% !important; }
+  .w-xl-75{ width: 75% !important; }
+  .w-xl-100{ width: 100% !important; }
+  .w-xl-notification-sidebar{ width: 480px !important;}
+}

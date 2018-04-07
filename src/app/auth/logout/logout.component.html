@@ -1,0 +1,66 @@
+<div *ngIf="!currentView; else alternativeView" class="container mt-1">
+  <div class="rounded jumbotron jumbotron-fluid bg-light">
+    <div class="container">
+      <h1 class="text-center">
+        <img src="../../assets/images/logo_gildemeister.png" width="228" />
+      </h1>
+      <h3 class="display-xs-4 display-sm-4 display-md-4">
+        <i class="fa text-danger mr-2" [ngClass]="[pageInfo.iconClass ? pageInfo.iconClass : 'fa-sign-out']"></i>{{ pageInfo.title }}</h3>
+      <h3 class="text-center display-5">
+        <i class="fa fa-clock-o mr-2"></i>Cerrando ventana en ... {{ counter }}
+        <span *ngIf="showLoaderToClose" class="ml-2">
+          <i class="fa fa-spinner fa-pulse fa-fw"></i>
+        </span>
+      </h3>
+      <p class="lead">{{ pageInfo.message.primary }}</p>
+      <hr class="my-2">
+      <p class="mb-0">{{ pageInfo.message.secondary }}</p>
+      <p *ngIf="pageInfo.contact">
+        Información de contacto: {{pageInfo.contact.name}} (
+        <i class="fa" [ngClass]="[pageInfo.contact.iconClass ? pageInfo.contact.iconClass: 'fa-phone']"></i>) {{pageInfo.contact.phone}}
+      </p>
+      <div class="d-flex justify-content-between">
+        <button disabled="true" class="btn btn-primary">
+          <i class="fa fa-unlock"></i>
+        </button>
+        <button class="btn btn-primary">
+          <i class="fa fa-gear fa-spin"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #alternativeView>
+  <div class="container mt-1">
+    <div class="rounded jumbotron jumbotron-fluid bg-light">
+      <div class="container">
+        <h1 class="text-center">
+          <i class="text-primary fa fa-2x fa-car mr-2"></i>{{ pageInfo.author }}</h1>
+        <h3 class="display-xs-4 display-sm-4 display-md-4">
+          <i class="fa text-danger mr-2" [ngClass]="[pageInfo.iconClass ? pageInfo.iconClass : 'fa-sign-out']"></i>>{{ pageInfo.title }}</h3>
+        <h3 class="text-center display-5">
+          <i class="fa fa-clock-o mr-2"></i>Cerrando ventana en ... {{ counter }}
+          <span *ngIf="showLoaderToClose" class="ml-2">
+            <i class="fa fa-spinner fa-pulse fa-fw"></i>
+          </span>
+        </h3>
+        <p class="lead">{{ pageInfo.message.primary }}</p>
+        <hr class="my-2">
+        <p class="mb-0">{{ pageInfo.message.secondary }}</p>
+        <p *ngIf="pageInfo.contact">
+          Información de contacto: {{pageInfo.contact.name}} (
+          <i class="fa" [ngClass]="[pageInfo.contact.iconClass ? pageInfo.contact.iconClass: 'fa-phone']"></i>) {{pageInfo.contact.phone}}
+        </p>
+        <div class="d-flex justify-content-between">
+          <button disabled="true" class="btn btn-primary">
+            <i class="fa fa-unlock"></i>
+          </button>
+          <button class="btn btn-primary">
+            <i class="fa fa-gear fa-spin"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,86 @@
+:host{
+  display: block;
+  position: relative
+}
+
+.btn-group label{
+  margin-bottom: 0;
+}
+
+.b-t-0{ border-top: 0 !important; }
+.b-t-1{ border-top: 1px !important; }
+.b-t-2{ border-top: 2px !important; }
+.b-t-3{ border-top: 3px !important; }
+.b-t-4{ border-top: 4px !important; }
+.b-t-5{ border-top: 5px !important; }
+
+.b-t-sm-0,
+.b-t-sm-1,
+.b-t-sm-2,
+.b-t-sm-3,
+.b-t-sm-4,
+.b-t-sm-5 { border-top: inherit; }
+
+.b-t-md-0,
+.b-t-md-1,
+.b-t-md-2,
+.b-t-md-3,
+.b-t-md-4,
+.b-t-md-5 { border-top: inherit ; }
+
+.b-t-lg-0,
+.b-t-lg-1,
+.b-t-lg-2,
+.b-t-lg-3,
+.b-t-lg-4,
+.b-t-lg-5 { border-top: inherit; }
+
+.b-t-xl-0,
+.b-t-xl-1,
+.b-t-xl-2,
+.b-t-xl-3,
+.b-t-xl-4,
+.b-t-xl-5 { border-top: inherit ; }
+
+/* Extra small devices (portrait phones, less than 576px)*/
+/* No media query since this is the default in Bootstrap*/
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .b-t-sm-0{ border-top: 0 !important; }
+  .b-t-sm-1{ border-top: 1px !important; }
+  .b-t-sm-2{ border-top: 2px !important; }
+  .b-t-sm-3{ border-top: 3px !important; }
+  .b-t-sm-4{ border-top: 4px !important; }
+  .b-t-sm-5{ border-top: 5px !important; }
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+  .b-t-md-0{ border-top: 0 !important; }
+  .b-t-md-1{ border-top: 1px !important; }
+  .b-t-md-2{ border-top: 2px !important; }
+  .b-t-md-3{ border-top: 3px !important; }
+  .b-t-md-4{ border-top: 4px !important; }
+  .b-t-md-5{ border-top: 5px !important; }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+  .b-t-lg-0{ border-top: 0 !important; }
+  .b-t-lg-1{ border-top: 1px !important; }
+  .b-t-lg-2{ border-top: 2px !important; }
+  .b-t-lg-3{ border-top: 3px !important; }
+  .b-t-lg-4{ border-top: 4px !important; }
+  .b-t-lg-5{ border-top: 5px !important; }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  .b-t-xl-0{ border-top: 0 !important; }
+  .b-t-xl-1{ border-top: 1px !important; }
+  .b-t-xl-2{ border-top: 2px !important; }
+  .b-t-xl-3{ border-top: 3px !important; }
+  .b-t-xl-4{ border-top: 4px !important; }
+  .b-t-xl-5{ border-top: 5px !important; }
+}

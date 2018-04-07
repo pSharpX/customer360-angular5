@@ -1,0 +1,22 @@
+<div [ngClass]="{'closed': !isOpen}">
+  <div class="modal-overlay" (click)="close(true)"></div>
+
+  <div class="messageBox">
+    <div class="title" *ngIf="modalTitle">
+      <span class="title-text">
+        {{ modalTitle }}
+      </span>
+      <button type="button" class="close right-align" aria-label="Close" (click)="close(true)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <!-- <span class="right-align" (click)="close(true)">
+        <span aria-hidden="true">&times;</span>
+      </span> -->
+    </div>
+
+    <div class="body">
+      <div class="col-md">{{ modalbody }}</div>
+      <div id="messageboxbody"></div>
+    </div>
+  </div>
+</div>

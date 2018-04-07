@@ -1,0 +1,453 @@
+<div *ngIf="error && error?.state === true">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{error?.title}} ({{error?.codigo}})</strong> {{error?.message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h6 class="float-left title fc-primary my-4">
+        <i class="fa fa-shopping-bag mr-2"></i>TD/Cotizaciones</h6>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-2 mb-1">
+  <div class="d-flex flex-column flex-md-row justify-content-between">
+    <div class="d-flex align-items-start justify-content-start mb-2">
+      <div class="btn-group btn-group-toggle btn-group-sm" data-toggle="buttons" role="group">
+        <label class="btn btn-success" for="tableMode" [ngClass]="{ 'active': (testDriveViewMode === 'table') }" (click)="testDriveViewMode = 'table'">
+          <input type="radio" name="options" id="tableMode" [(ngModel)]="testDriveViewMode" value="table" [checked]="testDriveViewMode === 'table'">
+          <i class="fa fa-th"></i>
+        </label>
+        <label class="btn btn-success" for="listMode" [ngClass]="{ 'active': (testDriveViewMode === 'list') }" (click)="testDriveViewMode = 'list'">
+          <input type="radio" name="options" id="listMode" [(ngModel)]="testDriveViewMode" value="list" [checked]="testDriveViewMode === 'list'">
+          <i class="fa fa-th-list"></i>
+        </label>
+      </div>
+    </div>
+    <div class="d-flex align-items-end justify-content-between justify-content-md-end mb-2">
+      <div class="mr-4 pb-2">
+        <p class="d-inline">
+          <i class="d-none d-md-inline fa fa-th mr-2"></i>{{(testsDrive | async)?.length}} Resultados</p>
+        <!-- <div class="btn-group btn-group-sm" role="group">
+          <button role="button" class="btn btn-link">
+            <i class="d-none d-md-inline fa fa-th mr-2"></i>Registros encontrados:
+            <span class="ml-2 badge badge-dark">{{(testsDrive | async)?.length}}</span>
+          </button>
+        </div> -->
+      </div>
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" [disabled]="(testsDrive | async)?.length === 0 || isTestDriveProcessing || isLoadingTestDrive" class="btn btn-primary"
+          (click)="exportTestsDriveTo()">
+          <i class="fa" [ngClass]="{
+            'fa-download': !isTestDriveProcessing,
+            'fa-cog': isTestDriveProcessing,
+            'fa-spin': isTestDriveProcessing
+          }"></i>
+          <span class="d-none d-md-inline ml-2">Exportar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" [ngClass]="{
+  'card': (testDriveViewMode === 'table'),
+  'card-columns': (testDriveViewMode === 'list')
+}">
+  <div *ngIf="testDriveViewMode === 'table'" class="card-body pb-0">
+    <div class="row">
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="td_fecha">Fecha
+            <input type="checkbox" id="td_fecha" class="d-none" (change)="sortTestsDrive('fechaPruebaManejo')" [(ngModel)]="testdriveOrders.fechaPruebaManejo">
+            <i class="fa ml-2" [ngClass]="{
+              'fa-chevron-down': testdriveOrders.fechaPruebaManejo,
+              'fa-chevron-up': !testdriveOrders.fechaPruebaManejo
+            }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="td_marca">Marca
+            <input type="checkbox" id="td_marca" class="d-none" (change)="sortTestsDrive('nombreMarca')" [(ngModel)]="testdriveOrders.nombreMarca">
+            <i class="fa ml-2" [ngClass]="{
+                'fa-chevron-down': testdriveOrders.nombreMarca,
+                'fa-chevron-up': !testdriveOrders.nombreMarca
+              }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="td_modelo">Modelo
+            <input type="checkbox" id="td_modelo" class="d-none" (change)="sortTestsDrive('nombreModelo')" [(ngModel)]="testdriveOrders.nombreModelo">
+            <i class="fa ml-2" [ngClass]="{
+                'fa-chevron-down': testdriveOrders.nombreModelo,
+                'fa-chevron-up': !testdriveOrders.nombreModelo
+              }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="td_version">Version
+            <input type="checkbox" id="td_version" class="d-none" (change)="sortTestsDrive('codigoFamiliaCorto')" [(ngModel)]="testdriveOrders.codigoFamiliaCorto">
+            <i class="fa ml-2" [ngClass]="{
+                'fa-chevron-down': testdriveOrders.codigoFamiliaCorto,
+                'fa-chevron-up': !testdriveOrders.codigoFamiliaCorto
+              }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="td_asesor">Asesor Comercial
+            <input type="checkbox" id="td_asesor" class="d-none" (change)="sortTestsDrive('nombreAsesor')" [(ngModel)]="testdriveOrders.nombreAsesor">
+            <i class="fa ml-2" [ngClass]="{
+                'fa-chevron-down': testdriveOrders.nombreAsesor,
+                'fa-chevron-up': !testdriveOrders.nombreAsesor
+              }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="td_punto_venta">Punto de Venta
+            <input type="checkbox" id="td_punto_venta" class="d-none" (change)="sortTestsDrive('asesorPuntoVenta')" [(ngModel)]="testdriveOrders.asesorPuntoVenta">
+            <i class="fa ml-2" [ngClass]="{
+                'fa-chevron-down': testdriveOrders.asesorPuntoVenta,
+                'fa-chevron-up': !testdriveOrders.asesorPuntoVenta
+              }"></i>
+          </label>
+        </p>
+      </div>
+      <!-- <div class="col-1 col-md-auto">
+        <p class="text-center mb-1">
+          <span>
+            <i class="fa fa-bars"></i>
+          </span>
+        </p>
+      </div> -->
+    </div>
+  </div>
+
+  <ng-container *ngIf="(testsDrive | async)?.length === 0">
+    <div [@routeAnimation] [ngClass]="{
+      'border-top-0': (testDriveViewMode !== 'table'),
+      'card-body': (testDriveViewMode === 'table'),
+      'card': (testDriveViewMode === 'list'),
+      'p-3': (testDriveViewMode === 'table'),
+      'border': (testDriveViewMode === 'table'),
+      'border-left-0': (testDriveViewMode === 'table'),
+      'border-right-0': (testDriveViewMode === 'table'),
+      'border-bottom-0': (testDriveViewMode === 'table')
+    }">
+      <div class="alert alert-light m-0" role="alert">
+        No se encontraron registros de Test Drive para este cliente.
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isLoadingTestDrive">
+    <div [@routeAnimation] [ngClass]="{
+      'border-top-0': (testDriveViewMode !== 'table'),
+      'card-body': (testDriveViewMode === 'table'),
+      'card': (testDriveViewMode === 'list'),
+      'p-3': (testDriveViewMode === 'table'),
+      'border': (testDriveViewMode === 'table'),
+      'border-left-0': (testDriveViewMode === 'table'),
+      'border-right-0': (testDriveViewMode === 'table'),
+      'border-bottom-0': (testDriveViewMode === 'table')
+    }">
+      <div class="alert alert-primary m-0" role="alert">
+        <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw mr-2"></i>Cargando TestDrive...
+      </div>
+    </div>
+  </ng-container>
+
+  <app-testdrive-item *ngFor="let item of _paginatedTestsDrive | async" [ngClass]="{
+    'card-body': (testDriveViewMode === 'table'),
+    'card': (testDriveViewMode === 'list'),
+    'border-info': (testDriveViewMode === 'list'),
+    'p-3': (testDriveViewMode === 'table'),
+    'border': (testDriveViewMode === 'table'),
+    'border-left-0': (testDriveViewMode === 'table'),
+    'border-right-0': (testDriveViewMode === 'table'),
+    'border-bottom-0': (testDriveViewMode === 'table')
+  }" [value]="item" [defaultView]="testDriveViewMode"></app-testdrive-item>
+
+  <!-- <div *ngIf="testDriveViewMode === 'table'" class="card-footer bg-transparent">
+    <a href="#" class="card-link">Paginations links</a>
+    <a href="#" class="card-link">Another link</a>
+  </div> -->
+</div>
+
+<div class="container mt-2 mb-1">
+  <div class="btn-toolbar mb-3 d-flex flex-row flex-md-row justify-content-between justify-content-md-end" role="toolbar">
+    <div class="btn-group btn-group-sm mt-2 mt-md-0" role="group">
+      <button class="btn btn-angle-double-left btn-pagination border" [disabled]="(currentPagTestsDrive.page < 2) || isLoadingTestDrive"
+        (click)="paginateTestsDrive(testsDrive, 1)"></button>
+      <button class="btn btn-angle-left btn-pagination border" [disabled]="(currentPagTestsDrive.page < 2) || isLoadingTestDrive"
+        (click)="paginateTestsDrive(testsDrive, currentPagTestsDrive.page - 1)"></button>
+      <button class="btn btn-pagination border" [ngClass]="['d-none', 'd-md-block']" [disabled]="currentPagTestsDrive.page === page"
+        *ngFor="let page of testDrivePages" (click)="paginateTestsDrive(testsDrive, page)">{{page}}</button>
+      <button class="btn btn-angle-right btn-pagination border" [disabled]="(currentPagTestsDrive.page >= currentPagTestsDrive.total_pages) || isLoadingTestDrive"
+        (click)="paginateTestsDrive(testsDrive, currentPagTestsDrive.page + 1)"></button>
+      <button class="btn btn-angle-double-right btn-pagination border" [disabled]="(currentPagTestsDrive.page >= currentPagTestsDrive.total_pages) || isLoadingTestDrive"
+        (click)="paginateTestsDrive(testsDrive, currentPagTestsDrive.total_pages)"></button>
+    </div>
+    <!-- <div class="input-group d-md-none w-75 mt-2 mt-md-0">
+      <input #tdgoto type="text" class="form-control" placeholder="Saltar a página" aria-describedby="btnGroupAddon">
+      <button class="input-group-addon btn btn-primary" id="btnGroupAddon" (click)="goToTestDrivePage(tdgoto.value)">
+        <i class="text-white fa fa-arrow-circle-left "></i>
+      </button>
+    </div> -->
+  </div>
+</div>
+
+<div class="container mt-5 mb-1">
+  <div class="d-flex flex-column flex-md-row justify-content-between">
+    <div class="d-inline-flex d-md-flex align-items-start justify-content-start mb-2">
+      <div class="btn-group btn-group-toggle btn-group-sm" data-toggle="buttons" role="group">
+        <label class="btn btn-success" for="tableMode" [ngClass]="{ 'active': (cotizacionesViewMode === 'table') }" (click)="cotizacionesViewMode = 'table'">
+          <input type="radio" name="options" id="tableMode" [(ngModel)]="cotizacionesViewMode" value="table" [checked]="cotizacionesViewMode === 'table'">
+          <i class="fa fa-th"></i>
+        </label>
+        <label class="btn btn-success" for="listMode" [ngClass]="{ 'active': (cotizacionesViewMode === 'list') }" (click)="cotizacionesViewMode = 'list'">
+          <input type="radio" name="options" id="listMode" [(ngModel)]="cotizacionesViewMode" value="list" [checked]="cotizacionesViewMode === 'list'">
+          <i class="fa fa-th-list"></i>
+        </label>
+      </div>
+    </div>
+    <div class="d-flex align-items-end justify-content-between justify-content-md-end mb-2">
+      <div class="mr-4 pb-2">
+        <p class="d-inline">
+          <i class="d-none d-md-inline fa fa-th mr-2"></i>{{(cotizaciones | async)?.length}} Resultados</p>
+        <!-- <div class="btn-group btn-group-sm" role="group">
+          <button role="button" class="btn btn-link">
+            <i class="d-none d-md-inline fa fa-th mr-2"></i>Registros encontrados:
+            <span class="ml-2 badge badge-dark">{{(cotizaciones | async)?.length}}</span>
+          </button>
+        </div> -->
+      </div>
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" [disabled]="(cotizaciones | async)?.length === 0 || isCotizacionesProcessing || isLoadingCotizaciones"
+          class="btn btn-primary" (click)="exportCotizacionesTo()">
+          <i class="fa" [ngClass]="{
+            'fa-download': !isCotizacionesProcessing,
+            'fa-cog': isCotizacionesProcessing,
+            'fa-spin': isCotizacionesProcessing
+          }"></i>
+          <span class="d-none d-md-inline ml-2">Exportar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" [ngClass]="{
+  'card': (cotizacionesViewMode === 'table'),
+  'card-columns': (cotizacionesViewMode === 'list')
+}">
+  <div *ngIf="cotizacionesViewMode === 'table'" class="card-body pb-0">
+    <div class="row">
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_numero">Nro
+            <input type="checkbox" id="c_numero" class="d-none" (change)="sortCotizaciones('numeroCotizacion')" [(ngModel)]="cotizacionOrders.numeroCotizacion">
+            <i class="fa ml-2" [ngClass]="{
+                  'fa-chevron-down': cotizacionOrders.numeroCotizacion,
+                  'fa-chevron-up': !cotizacionOrders.numeroCotizacion
+                }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_fecha">Fecha
+            <input type="checkbox" id="c_fecha" class="d-none" (change)="sortCotizaciones('fechaRegistro')" [(ngModel)]="cotizacionOrders.fechaRegistro">
+            <i class="fa ml-2" [ngClass]="{
+                'fa-chevron-down': cotizacionOrders.fechaRegistro,
+                'fa-chevron-up': !cotizacionOrders.fechaRegistro
+              }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_marca">Marca
+            <input type="checkbox" id="c_marca" class="d-none" (change)="sortCotizaciones('nombreMarca')" [(ngModel)]="cotizacionOrders.nombreMarca">
+            <i class="fa ml-2" [ngClass]="{
+                    'fa-chevron-down': cotizacionOrders.nombreMarca,
+                    'fa-chevron-up': !cotizacionOrders.nombreMarca
+                  }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_modelo">Modelo
+            <input type="checkbox" id="c_modelo" class="d-none" (change)="sortCotizaciones('nombreModelo')" [(ngModel)]="cotizacionOrders.nombreModelo">
+            <i class="fa ml-2" [ngClass]="{
+                    'fa-chevron-down': cotizacionOrders.nombreModelo,
+                    'fa-chevron-up': !cotizacionOrders.nombreModelo
+                  }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_version">Version
+            <input type="checkbox" id="c_version" class="d-none" (change)="sortCotizaciones('añoModelo')" [(ngModel)]="cotizacionOrders['añoModelo']">
+            <i class="fa ml-2" [ngClass]="{
+                      'fa-chevron-down': cotizacionOrders['añoModelo'],
+                      'fa-chevron-up': !cotizacionOrders['añoModelo']
+                    }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_precio_cierre">Precio Cierre
+            <input type="checkbox" id="c_precio_cierre" class="d-none" (change)="sortCotizaciones('montoPrecioCierre')" [(ngModel)]="cotizacionOrders.montoPrecioCierre">
+            <i class="fa ml-2" [ngClass]="{
+                      'fa-chevron-down': cotizacionOrders.montoPrecioCierre,
+                      'fa-chevron-up': !cotizacionOrders.montoPrecioCierre
+                    }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_precio_venta">Precio Final
+            <input type="checkbox" id="c_precio_venta" class="d-none" (change)="sortCotizaciones('montoPrecioVenta')" [(ngModel)]="cotizacionOrders.montoPrecioVenta">
+            <i class="fa ml-2" [ngClass]="{
+                      'fa-chevron-down': cotizacionOrders.montoPrecioVenta,
+                      'fa-chevron-up': !cotizacionOrders.montoPrecioVenta
+                    }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_punto_venta">Punto de Venta
+            <input type="checkbox" id="c_punto_venta" class="d-none" (change)="sortCotizaciones('nombrePuntoVenta')" [(ngModel)]="cotizacionOrders.nombrePuntoVenta">
+            <i class="fa ml-2" [ngClass]="{
+                      'fa-chevron-down': cotizacionOrders.nombrePuntoVenta,
+                      'fa-chevron-up': !cotizacionOrders.nombrePuntoVenta
+                    }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_asesor">Asesor
+            <input type="checkbox" id="c_asesor" class="d-none" (change)="sortCotizaciones('nombreEmpleado')" [(ngModel)]="cotizacionOrders.nombreEmpleado">
+            <i class="fa ml-2" [ngClass]="{
+                      'fa-chevron-down': cotizacionOrders.nombreEmpleado,
+                      'fa-chevron-up': !cotizacionOrders.nombreEmpleado
+                    }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="c_estado">Estado
+            <input type="checkbox" id="c_estado" class="d-none" (change)="sortCotizaciones('nombreEstado')" [(ngModel)]="cotizacionOrders.nombreEstado">
+            <i class="fa ml-2" [ngClass]="{
+                      'fa-chevron-down': cotizacionOrders.nombreEstado,
+                      'fa-chevron-up': !cotizacionOrders.nombreEstado
+                    }"></i>
+          </label>
+        </p>
+      </div>
+      <!-- <div class="col-1 col-md-auto">
+        <p class="text-center mb-1">
+          <span>
+            <i class="fa fa-bars"></i>
+          </span>
+        </p>
+      </div> -->
+    </div>
+  </div>
+
+  <ng-container *ngIf="(cotizaciones | async)?.length === 0">
+    <div [@routeAnimation] [ngClass]="{
+      'border-top-0': (cotizacionesViewMode !== 'table'),
+      'card-body': (cotizacionesViewMode === 'table'),
+      'card': (cotizacionesViewMode === 'list'),
+      'p-3': (cotizacionesViewMode === 'table'),
+      'border': (cotizacionesViewMode === 'table'),
+      'border-left-0': (cotizacionesViewMode === 'table'),
+      'border-right-0': (cotizacionesViewMode === 'table'),
+      'border-bottom-0': (cotizacionesViewMode === 'table')
+    }">
+      <div class="alert alert-light m-0" role="alert">
+        No se encontraron registros de cotizaciones para este cliente.
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isLoadingCotizaciones">
+    <div [@routeAnimation] [ngClass]="{
+      'border-top-0': (cotizacionesViewMode !== 'table'),
+      'card-body': (cotizacionesViewMode === 'table'),
+      'card': (cotizacionesViewMode === 'list'),
+      'p-3': (cotizacionesViewMode === 'table'),
+      'border': (cotizacionesViewMode === 'table'),
+      'border-left-0': (cotizacionesViewMode === 'table'),
+      'border-right-0': (cotizacionesViewMode === 'table'),
+      'border-bottom-0': (cotizacionesViewMode === 'table')
+    }">
+      <div class="alert alert-primary m-0" role="alert">
+        <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw mr-2"></i>Cargando Cotizaciones...
+      </div>
+    </div>
+  </ng-container>
+
+  <app-cotizacion-item *ngFor="let item of _paginatedCotizaciones | async" [ngClass]="{
+    'card-body': (cotizacionesViewMode === 'table'),
+    'card': (cotizacionesViewMode === 'list'),
+    'border-info': (cotizacionesViewMode === 'list'),
+    'p-3': (cotizacionesViewMode === 'table'),
+    'border': (cotizacionesViewMode === 'table'),
+    'border-left-0': (cotizacionesViewMode === 'table'),
+    'border-right-0': (cotizacionesViewMode === 'table'),
+    'border-bottom-0': (cotizacionesViewMode === 'table')
+  }" [value]="item" [defaultView]="cotizacionesViewMode"></app-cotizacion-item>
+
+  <!-- <div *ngIf="cotizacionesViewMode === 'table'" class="card-footer bg-transparent">
+    <a href="#" class="card-link">Paginations links</a>
+    <a href="#" class="card-link">Another link</a>
+  </div> -->
+</div>
+
+<div class="container mt-2 mb-1">
+  <div class="btn-toolbar mb-3 d-flex flex-row flex-md-row justify-content-between justify-content-md-end">
+    <div class="btn-group btn-group-sm mt-2 mt-md-0" role="group">
+      <button class="btn btn-angle-double-left btn-pagination border" [disabled]="(currentPagCotizaciones.page < 2) || isLoadingCotizaciones"
+        (click)="paginateCotizaciones(cotizaciones, 1)"></button>
+      <button class="btn btn-angle-left btn-pagination border" [disabled]="(currentPagCotizaciones.page < 2) || isLoadingCotizaciones"
+        (click)="paginateCotizaciones(cotizaciones, currentPagCotizaciones.page - 1)"></button>
+      <button class="btn btn-pagination border" [ngClass]="['d-none', 'd-md-block']" [disabled]="currentPagCotizaciones.page === page"
+        *ngFor="let page of cotizacionPages" (click)="paginateCotizaciones(cotizaciones, page)">{{page}}</button>
+      <button class="btn btn-angle-right btn-pagination border" [disabled]="(currentPagCotizaciones.page >= currentPagCotizaciones.total_pages) || isLoadingCotizaciones"
+        (click)="paginateCotizaciones(cotizaciones, currentPagCotizaciones.page + 1)"></button>
+      <button class="btn btn-angle-double-right btn-pagination border" [disabled]="(currentPagCotizaciones.page >= currentPagCotizaciones.total_pages) || isLoadingCotizaciones"
+        (click)="paginateCotizaciones(cotizaciones, currentPagCotizaciones.total_pages)"></button>
+    </div>
+    <!-- <div class="input-group d-md-none w-75 mt-2 mt-md-0">
+      <input #cotigoto type="text" class="form-control" placeholder="Saltar a página" aria-describedby="btnGroupAddon">
+      <button class="input-group-addon btn btn-primary" id="btnGroupAddon" (click)="goToCotizacionPage(cotigoto.value)">
+        <i class="text-white fa fa-arrow-circle-left "></i>
+      </button>
+    </div> -->
+  </div>
+</div>

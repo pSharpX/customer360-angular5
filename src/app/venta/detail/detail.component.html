@@ -1,0 +1,313 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col">
+      <p class="font-weight-light">
+        <a role="button" (click)="goBack()" class="btn btn-link" style="color: #006bb9;">
+          <i class="fa fa-arrow-left mr-2"></i>Regresar a Lista de Ventas y Servicios</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<app-venta-state [value]="venta"></app-venta-state>
+
+<div class="mt-4">
+  <nav class="nav nav-tabs  flex-column flex-sm-row border-bottom-0" role="tablist">
+    <a class="nav-item nav-link active" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info"
+      aria-selected="true">Datos de Venta</a>
+    <a class="nav-item nav-link" id="nav-tracking-tab" data-toggle="tab" href="#nav-tracking" role="tab" aria-controls="nav-tracking"
+      aria-selected="false">Seguimiento</a>
+  </nav>
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+      <div class="d-block" *ngIf="venta; then dataSaleInfo; else elseBlock">
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-tracking" role="tabpanel" aria-labelledby="nav-tracking-tab">
+      <div class="d-block" *ngIf="venta; then dataSaleTracking; else elseBlock">
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #elseBlock>
+  <div class="alert alert-danger">No se encontró Venta asociada a Cliente</div>
+</ng-template>
+<ng-template #dataSaleInfo>
+  <div class="card">
+    <div class="card-body">
+      <div class="row d-flex align-items-center">
+        <div class="col col-md-4">
+          <div class="title">
+            <i class="mr-2 fa fa-building-o"></i> Información de Venta</div>
+        </div>
+        <div class="col-12 col-md-8">
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Punto de Venta</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.nombrePuntoVenta }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Administrador de Venta</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.administrador_venta }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Vendedor/Asesor</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.nombreAsesor }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Modelo de Vehiculo</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.nombreModelo }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Vin</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.vin }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Ubicación</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.nombreUbicacion }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Fecha de Factura</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.fechaFacturacion }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <div class="row d-flex align-items-center">
+          <div class="col col-md-4">
+            <div class="title">
+              <i class="mr-2 fa fa-credit-card"></i> Información de Pago</div>
+          </div>
+          <div class="col-12 col-md-8">
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Factura</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.comprobanteNumero }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Valor Total</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.montoPrecioCierre }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Forma Pago</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.nombreFormaPago }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Anticipos</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.anticipos }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Fecha Cancelación</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.fechaCancelacion }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Excepción</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.excepcion }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Fecha Cumplimiento</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.fecha_cumplimiento }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Firma Nota Pedido</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.firma_nota_pedido }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Cargo Factura</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.cargo_factura }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Cargo Anticipos</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.cargo_anticipos }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Nota de Crédito</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.nota_credito }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md">
+                <p class="text-left title">Cargo Nota de Crédito</p>
+              </div>
+              <div class="col-12 col-md">
+                <p class="mb-0 text-left text-md-right">{{ venta?.cargo_nota_credito }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="card-body">
+      <div class="row d-flex align-items-center">
+        <div class="col col-md-4">
+          <div class="title">
+            <i class="mr-2 fa fa-building"></i> Detalle de Proceso</div>
+        </div>
+        <div class="col-12 col-md-8">
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Factura OT</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.factura_ot }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Cargo Factura OT</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.cargo_factura_ot }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Fecha Envio de Placas</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.fechaAsignacionPlaca }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Fecha Gestor de Placas</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.fechaSolicitudPlaca }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Número Títuto</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.numero_titulo }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Fecha Tarjeta</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.fecha_tarjeta }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Fecha Solicitud PDI</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.fechaSolicitudPDI }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Fecha OD</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.fecha_od }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Fecha Entrega</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.fechaEntrega }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Número Guia Entrega</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.numero_guia_entrega }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md">
+              <p class="text-left title">Observaciones</p>
+            </div>
+            <div class="col-12 col-md">
+              <p class="mb-0 text-left text-md-right">{{ venta?.observaciones }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #dataSaleTracking>
+  <div class="alert alert-danger">No se encontró Venta asociada a Cliente</div>
+</ng-template>

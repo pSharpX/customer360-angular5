@@ -1,0 +1,37 @@
+<div id="searchcliente" class="container-fluid mt-4 mt-md-0">
+  <label class="d-block ml-2 ml-md-0 ml-0 ml-md-2">BUSCAR POR:</label>
+  <form class="form-inline">
+    <select class="custom-select mr-sm-2 mb-2 mb-md-0 w-5 w-md-0" name="1" [(ngModel)]="opcionSeleccionado" (change)="changeFiltro()">
+      <option value="1" selected>Nombre</option>
+      <option value="3">Contacto</option>
+      <option value="2">N° Documento</option>
+      <option value="4">N° Placa</option>
+    </select>
+    <input type="text" name="test" [(ngModel)]="textoIngresado" class="form-control mr-sm-2 mb-2 mb-md-0" [placeholder]="placeholderInput" required
+      (keypress)="soloAlfanumerico($event)" (focus)="focusInput()" (blur)="blurInput()"
+    />
+    <br>
+    <a (click)="clickSearch()" class="btn btn-binoculars btn-primary" style="color:white;">Buscar</a>
+  </form>
+
+  <div *ngIf="inputFocusClass">
+    <div *ngIf="textoIngresado.length >= minLength; then okmsj1 else errormsj1"></div>
+    <ng-template #errormsj1>
+      <a style="margin-left: 30%;color: red;font-size: x-small;">El valor ingresado debe contener mínimo {{minLength}} caracteres</a>
+    </ng-template>
+    <ng-template #okmsj1>
+        <div *ngIf="textoIngresado.length <= maxLength; then okmsj2 else errormsj2"></div>
+        <ng-template #errormsj2>
+          <a style="margin-left: 30%;color: red;font-size: x-small;">El valor ingresado debe contener máximo {{maxLength}} caracteres</a>
+        </ng-template>
+        <ng-template #okmsj2>
+          <a></a>
+        </ng-template>
+    </ng-template>
+  </div>
+  <br>
+  <label class="d-block ml-2 ml-md-0 ml-0 ml-md-2">BÚSQUEDA AVANZADA
+    <label style="cursor:pointer;" class="fa ml-2" id="busquedaavanzada" (click)="colapsarBusquedaAvanzada($event)">>></label>
+  </label>  
+</div>
+

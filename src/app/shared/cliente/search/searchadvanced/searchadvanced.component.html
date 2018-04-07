@@ -1,0 +1,316 @@
+<div [ngClass]="{'closed': !isOpen}">
+  <div class="modal-overlay" (click)="close(true)"></div>
+  <div class="messageBoxAdv">
+    <div class="title">
+      <span class="title-text">
+        BÚSQUEDA AVANZADA
+      </span>
+      <span class="right-align" (click)="close(true)">
+        <i class="material-icons md-24">X</i>
+      </span>
+    </div>
+    <div class="body" style="overflow-y: scroll;height: 453px;">
+      <div>
+        <div class="col-lg-12">
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Datos de Vehículo</legend>
+            <div class="row">
+              <div class="col-12 col-md-1">
+                <label class="d-block text-left" style="margin-top: 8px;" for="marca">VIN</label>
+              </div>
+              <div class="col-12 col-md-3">
+                <input type="text" id="txtVIN" [(ngModel)]="valueVIN" (keypress)="soloAlfanumerico($event)" (focus)="focusInput()" (blur)="blurInput()"
+                  class="form-control mr-sm-2 mb-2 mb-md-0" placeholder="Buscar por VIN" />
+                <div *ngIf="inputFocusClass">
+                  <div *ngIf="valueVIN.length >= minLength; then okmsj1 else errormsj1"></div>
+                  <ng-template #errormsj1>
+                    <a style="color: red;font-size: x-small;float: left;padding-left: 2%;">El valor ingresado debe contener</a>
+                    <br>
+                    <a style="color: red;font-size: x-small;float: left;padding-left: 2%;">mínimo {{minLength}} caracteres</a>
+                  </ng-template>
+                  <ng-template #okmsj1>
+                    <div *ngIf="valueVIN.length <= maxLength; then okmsj2 else errormsj2"></div>
+                    <ng-template #errormsj2>
+                      <a style="color: red;font-size: x-small;float: left;padding-left: 2%;">El valor ingresado debe contener</a>
+                      <br>
+                      <a style="color: red;font-size: x-small;float: left;padding-left: 2%;">máximo {{maxLength}} caracteres</a>
+                    </ng-template>
+                    <ng-template #okmsj2>
+                      <a></a>
+                    </ng-template>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="col-12 col-md-2">
+                <label class="d-block text-left" style="margin-top: 8px;" for="aniofabricacion">Año de fabricación</label>
+              </div>
+              <div class="col-12 col-md-3">
+                <select id="aniofabricacion" [(ngModel)]="opcionSelecAnioFabricacion" class="custom-select custom-select-sm mb-1">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let aniofab of listAnioFabricacion" [value]="aniofab">
+                    {{aniofab}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-12 col-md-3">
+                <a (click)="clickSearch()" class="btn btn-binoculars btn-primary" style="color:white;float: right;">Buscar</a>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-12 col-md-1">
+                <label class="d-block text-left" style="margin-top: 8px;" for="marca">Marca</label>
+              </div>
+              <div class="col-12 col-md-3">
+                <select id="marca" [(ngModel)]="opcionSelecMarcas" class="custom-select custom-select-sm mb-1">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let marca of listMarcas" [value]="marca.idMarca">
+                    {{marca.nombreMarca}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-12 col-md-2">
+                <label class="d-block text-left" style="margin-top: 8px;" for="aniomodelo">Año de Modelo</label>
+              </div>
+              <div class="col-12 col-md-3">
+                <select id="aniomodelo" [(ngModel)]="opcionSelecAnioModelo" class="custom-select custom-select-sm mb-1">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let aniomod of listAnioModelo" [value]="aniomod">
+                    {{aniomod}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-12 col-md-1">
+                <label class="d-block text-left" style="margin-top: 8px;" for="marca">Modelo</label>
+              </div>
+              <div class="col-12 col-md-3">
+                <select id="modelo" [(ngModel)]="opcionSelecModelos" class="custom-select custom-select-sm mb-1">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let modelo of listModelos" [value]="modelo.idModelo">
+                    {{modelo.nombreModelo}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-lg-12">
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Ubigeo</legend>
+            <div class="control-group row">
+              <label class="col-sm-2 d-block" style="padding-top: 8px;text-align: left;" for="departamento">Departamento</label>
+              <div class="col-12 col-sm-2">
+                <select id="departamento" [(ngModel)]="opcionSelecDepartamento" class="custom-select custom-select-sm mb-1" (change)="onDepartamentoChange()">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let depar of listDepartamento" [value]="depar.codigo">
+                    {{depar.nombre}}
+                  </option>
+                </select>
+              </div>
+              <label class="col-sm-2 d-block" style="padding-top: 8px;text-align: left;" for="provincia">Provincia</label>
+              <div class="col-12 col-sm-2">
+                <select id="provincia" [(ngModel)]="opcionSelecProvincia" class="custom-select custom-select-sm mb-1" (change)="onProvinciaChange()">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let prov of listProvincia | async" [value]="prov.codigo">
+                    {{prov.nombre}}
+                  </option>
+                </select>
+              </div>
+              <label class="col-sm-2 d-block" style="padding-top: 8px;text-align: left;" for="distrito">Distrito</label>
+              <div class="col-12 col-md-2">
+                <select id="distrito" [(ngModel)]="opcionSelecDistrito" class="custom-select custom-select-sm mb-1">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let dist of listDistrito | async" [value]="dist.codigo">
+                    {{dist.nombre}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-lg-12">
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Tipo de cliente</legend>
+            <div class="control-group row">
+              <div class="col-12 col-md-3">
+                <div>
+                  <div style="position: absolute;padding-top: 3px;">
+                    <input type="checkbox" [(ngModel)]="valuePorVentaVehiculos" (change)="ventasdisplayChange()" />
+                  </div>
+                  <div style="text-align: left;margin-left: 16%;">
+                    <label>Ventas de Vehículos</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-2">
+                <div>
+                  <div style="position: absolute;padding-top: 3px;">
+                    <input type="checkbox" [(ngModel)]="valuePorServicios" (change)="serviciosdisplayChange()" />
+                  </div>
+                  <div style="text-align: left;margin-left: 16%;">
+                    <label>Servicios</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-2">
+                <div>
+                  <div style="position: absolute;padding-top: 3px;">
+                    <input type="checkbox" [(ngModel)]="valuePorRepuestos" (change)="repuestosdisplayChange()" />
+                  </div>
+                  <div style="text-align: left;margin-left: 16%;">
+                    <label>Repuestos</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-lg-12" [hidden]="iscontVentasDisplay">
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Venta de vehículo</legend>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label text-left" for="sucursal">Por sucursal</label>
+              <div class="col-sm-4">
+                <select id="sucursal" [(ngModel)]="opcionSelecPuntoVenta" class="custom-select custom-select-sm mb-1" (change)="onPuntoVentaChange()">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let ptovta of listPuntoVenta" [value]="ptovta.idPuntoVenta">
+                    {{ptovta.nombrePuntoVenta}}
+                  </option>
+                </select>
+              </div>
+              <label for="Asesor" class="col-sm-2 text-left col-form-label">Asesor Cormercial</label>
+              <div class="col-sm-4">
+                <select id="sucursal" [(ngModel)]="opcionSelecAsesorComercial" class="custom-select custom-select-sm mb-1">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let asesor of listAsesorComercial | async" [value]="asesor.codAsesor">
+                    {{asesor.nombreAsesor}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <br>
+            <div class="form-group row">
+              <label class="col-form-label text-left col-sm-3" for="fechaentrega">Por fecha de entrega</label>
+              <label for="FechaInicio" class="col-sm-1 text-left col-form-label">De</label>
+              <div class="col-sm-3">
+                <div class="input-group mb-1">
+                  <input [(ngModel)]="valueFechaEntregaDe" [maxDate]="max_Date" ngbDatepicker #fechaentregaDe="ngbDatepicker" placeholder="yyyy-mm-dd" readonly="readonly"
+                    type="text" class="form-control form-control-sm">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" (click)="fechaentregaDe.toggle()" type="button">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <label for="FechaFin" class="col-sm-1 text-left col-form-label">Hasta</label>
+              <div class="col-sm-3">
+                <div class="input-group mb-1">
+                  <input [(ngModel)]="valueFechaEntregaHasta" [maxDate]="max_Date" ngbDatepicker #fechaentregaHasta="ngbDatepicker" placeholder="yyyy-mm-dd" readonly="readonly"
+                    type="text" class="form-control form-control-sm">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" (click)="fechaentregaHasta.toggle()" type="button">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-lg-12" [hidden]="iscontServiciosDisplay">
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Servicios</legend>
+            <div class="form-group row">
+              <label class="col-form-label text-left col-sm-3" for="fechaultservicio">Por fecha de último servicio</label>
+              <label class="col-sm-1 text-left col-form-label">De</label>
+              <div class="col-sm-3">
+                <div class="input-group mb-1">
+                  <input [(ngModel)]="valueFechaUltServicioDe" [maxDate]="max_Date" ngbDatepicker #fechaultservicioDe="ngbDatepicker" placeholder="yyyy-mm-dd" readonly="readonly"
+                    type="text" class="form-control form-control-sm">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" (click)="fechaultservicioDe.toggle()" type="button">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <label class="col-sm-1 text-left col-form-label">Hasta</label>
+              <div class="col-sm-3">
+                <div class="input-group mb-1">
+                  <input [(ngModel)]="valueFechaUltServicioHasta" [maxDate]="max_Date" ngbDatepicker #fechaultservicioHasta="ngbDatepicker" placeholder="yyyy-mm-dd"
+                    readonly="readonly" type="text" class="form-control form-control-sm">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" (click)="fechaultservicioHasta.toggle()" type="button">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label text-left" for="asesorservicio">Asesor de servicio</label>
+              <div class="col-sm-4">
+                <select id="asesorservicio" [(ngModel)]="opcionSelecAsesorServicio" class="custom-select custom-select-sm mb-1">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let asservic of listAsesorServicio" [value]="asservic.codAsesor">
+                    {{asservic.nombreAsesor}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="col-lg-12" [hidden]="iscontRepuestosDisplay">
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Repuestos</legend>
+            <div class="form-group row">
+              <label class="col-form-label text-left col-sm-3" for="fechaultservicio">Por fecha de último venta</label>
+              <label class="col-sm-1 text-left col-form-label">De</label>
+              <div class="col-sm-3">
+                <div class="input-group mb-1">
+                  <input [(ngModel)]="valueFechaUltVentaDe" [maxDate]="max_Date" ngbDatepicker #fechaultventaDe="ngbDatepicker" placeholder="yyyy-mm-dd" readonly="readonly"
+                    type="text" class="form-control form-control-sm">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" (click)="fechaultventaDe.toggle()" type="button">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <label class="col-sm-1 text-left col-form-label">Hasta</label>
+              <div class="col-sm-3">
+                <div class="input-group mb-1">
+                  <input [(ngModel)]="valueFechaUltVentaHasta" [maxDate]="max_Date" ngbDatepicker #fechaultventaHasta="ngbDatepicker" placeholder="yyyy-mm-dd" readonly="readonly"
+                    type="text" class="form-control form-control-sm">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" (click)="fechaultventaHasta.toggle()" type="button">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label text-left" for="vendedormos">Vendedor mostrador</label>
+              <div class="col-sm-4">
+                <select id="vendedormostrador" [(ngModel)]="opcionSelecAsesorVendedor" class="custom-select custom-select-sm mb-1">
+                  <option value="00">Seleccione</option>
+                  <option *ngFor="let asservend of listAsesorVendedor" [value]="asservend.codAsesor">
+                    {{asservend.nombreAsesor}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

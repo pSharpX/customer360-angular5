@@ -1,0 +1,277 @@
+<div class="d-block mb-2">
+  <div class="float-sm-right">
+    <a [routerLink]="['../edit']" routerLinkActive="active" class="btn btn-edit btn-primary" href="#">Editar</a>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<div *ngIf="cliente && cliente?.idCliente" class="card">
+  <div class="card-body">
+    <div class="row d-flex align-items-center">
+      <div class="col col-md-4">
+        <div class="title">
+          <i class="mr-2 fa fa-male"></i> Datos Personales
+        </div>
+      </div>
+      <div class="col-12 col-md-8">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p *ngIf="!es_persona_juridica; else ruc" class="text-left title">DNI</p>
+            <ng-template #ruc>
+              <p class="text-left title">RUC</p>
+            </ng-template>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.numeroDocumento }}</p>
+          </div>
+        </div>
+        <div class="row" *ngIf="!es_persona_juridica">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Nombre</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.nombre }}</p>
+          </div>
+        </div>
+        <div class="row" *ngIf="es_persona_juridica">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Razón Social</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.razonSocial }}</p>
+          </div>
+        </div>
+        <!-- No es persona jurididica -->
+        <div *ngIf="!es_persona_juridica">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="text-left title">Apellido Paterno</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="mb-0 text-left text-md-right">{{ cliente.apellidoPaterno }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="text-left title">Apellido Materno</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="mb-0 text-left text-md-right">{{ cliente.apellidoMaterno }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Teléfono</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.telefono }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Celular</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.celular }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Correo</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.correo }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="es_persona_juridica; else persona"></div>
+        <ng-template #persona>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="text-left title">Estado Civil</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="mb-0 text-left text-md-right">{{ cliente.estadoCivil }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="text-left title">Sexo</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="mb-0 text-left text-md-right">{{ cliente.genero }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="text-left title">Fecha Nacimiento</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="mb-0 text-left text-md-right">{{ cliente.fechaNacimiento }}</p>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <ul *ngIf="es_persona_juridica" class="list-group list-group-flush">
+    <li class="list-group-item">
+      <ng-template *ngIf="es_persona_juridica; then direccionSection"></ng-template>
+    </li>
+  </ul>
+  <div *ngIf="!es_persona_juridica" class="card-footer bg-transparent">
+    <ng-template *ngIf="!es_persona_juridica; then direccionSection"></ng-template>
+  </div>
+  <ng-template #direccionSection>
+    <div class="row d-flex align-items-center">
+      <div class="col col-md-4">
+        <div class="title">
+          <i class="mr-2 fa fa-map-marker"></i> Datos de Dirección
+        </div>
+      </div>
+      <div class="col-12 col-md-8">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Dirección</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.direccion }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">País</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.pais }}</p>
+          </div>
+        </div>
+        <div *ngIf="is_ubigeo_empty">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="text-left title">Departamento</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="mb-0 text-left text-md-right">{{ cliente.departamento }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="text-left title">Provincia</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="mb-0 text-left text-md-right">{{ cliente.provincia }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="text-left title">Distrito</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="mb-0 text-left text-md-right">{{ cliente.distrito }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Código Postal</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.codigoPostal }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <div *ngIf="es_persona_juridica" class="card-body">
+    <div class="row d-flex align-items-center">
+      <div class="col col-md-4">
+        <div class="title">
+          <i class="mr-2 fa fa-building"></i> Datos de Contacto
+        </div>
+      </div>
+      <div class="col-12 col-md-8">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">N° Documento</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.contactoDocumento }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Nombre</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.nombreContacto }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Apellido Paterno</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.apellidoPaternoContacto }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Apellido Materno</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.apellidoMaternoContacto }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Sexo</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.sexoContactoNombre }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Teléfono</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.telefonoContacto }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Celular</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.celularContacto }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="text-left title">Correo</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <p class="mb-0 text-left text-md-right">{{ cliente.correoContacto }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading === true">
+  <div class="alert alert-primary m-0" role="alert">
+    <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw mr-2"></i>Cargando Información de Cliente ...
+  </div>
+</div>
+
+<div *ngIf="error && error?.state === true">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{error?.title}} ({{error?.codigo}})</strong> {{error?.message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>

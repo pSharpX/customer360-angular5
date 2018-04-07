@@ -1,0 +1,7 @@
+<div *ngIf='showloader' class="animationload">
+    <div class="osahanloading"></div>
+</div>
+<router-outlet></router-outlet>
+<app-searchadvanced [modalId]="'modalAdvancedId'"></app-searchadvanced>
+<app-modal [modalId]="'modalId'">
+</app-modal>

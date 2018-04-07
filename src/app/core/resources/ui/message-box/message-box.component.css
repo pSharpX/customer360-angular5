@@ -1,0 +1,105 @@
+.modal-overlay{
+  background-color:rgba(0,0,0,.4);
+  bottom:0;
+  left:0;
+  position:fixed;
+  right:0;
+  top:0;
+  z-index:1000
+}
+
+.closed .messageBox{
+  top:-50%
+}
+
+.closed .modal-overlay{
+  display:none
+}
+
+.messageBox{
+  box-shadow:0 12px 15px 0 rgba(0,0,0,.22),0 17px 20px 0 rgba(0,0,0,.12);
+  background-color:#fff;
+  max-height:calc(100% - 10em);
+  position:fixed;
+  top:5em;
+  width:45%;
+  z-index:1100;
+  transition:all .5s ease;
+  top: 40%;
+  left:26%;
+}
+
+.messageBox .title{
+  background-color:#006BB9;
+  text-align:center;
+  color:#fff;
+  line-height:40px
+}
+
+.messageBox .title .right-align{
+  position:absolute;
+  right:5px;
+  padding: 5px;
+  margin: -5px -0px -5px auto;
+}
+
+.messageBox .title .right-align, .messageBox .title .right-align  i{
+  line-height:40px
+}
+
+.messageBox .title .right-align:hover{
+  cursor:pointer;
+  -webkit-transform:scale(1.1);
+  transform:scale(1.1)
+}
+
+.messageBox .body{
+  padding:1.2em;
+  text-align: center;
+}
+
+
+/* AJUSTE MOBILE */
+
+@media screen and (max-width:991px){
+
+  .mobilemessageBox {
+      width: 89%;
+      top: 15%;
+      left: 6%;
+  }
+
+  .mobilemessageBox2 {
+    width: 85%;
+    left: 8%;
+  }
+
+}
+
+@media screen and (max-width:368px){
+
+  .mobilemessageBox {
+    width: 89%;
+    top: 15%;
+    left: 6%;
+  }
+
+  .mobilemessageBox2 {
+    width: 85%;
+    left: 8%;
+  }
+}
+
+@media screen and (max-width:767px){
+
+  .mobilemessageBox {
+    width: 89%;
+    top: 15%;
+    left: 6%;
+  }
+
+  .mobilemessageBox2 {
+    width: 85%;
+    left: 8%;
+  }
+}

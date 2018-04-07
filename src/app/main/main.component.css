@@ -1,0 +1,106 @@
+:host {
+  display: block;
+  background-color: #f4f4f4;
+  width: 100vw;
+  height: 100vh;
+}
+
+.child {
+  position: relative;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.bg-primary{
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.overlay {
+  /* full screen */
+  width: 100vw;
+  height: 100vh;
+  /* transparent black */
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* middle layer, i.e. appears below the sidebar */
+  z-index: 1020;
+}
+
+.avatar {
+  max-width: 32px;
+  min-height: 32px;
+}
+
+/* Extra small devices (portrait phones, less than 576px)*/
+/* No media query since this is the default in Bootstrap*/
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .child{
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+  .child{
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+  :host {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .child {
+    position: absolute;
+    top: 30%;
+    transform: translateX(70%);
+    padding: inherit;
+    margin: inherit;
+  }
+
+  .bg-primary{
+    background-color: transparent !important;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  :host {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .child {
+    position: absolute;
+    top: 30%;
+    transform: translateX(70%);
+    padding: inherit;
+    margin: inherit;
+  }
+
+  .bg-primary{
+    background-color: transparent !important;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+}

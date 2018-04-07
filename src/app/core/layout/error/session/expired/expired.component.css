@@ -1,0 +1,95 @@
+:host {
+  position: fixed;
+  background-color: #f8f9fa!important;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  overflow-y: scroll;
+}
+
+.btn-group-lg>.btn, .btn-lg {
+  padding: .5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: .3rem;
+}
+
+.rounded {
+  border-radius: .68rem!important;
+}
+
+.display-1{ font-size: 6.0rem !important; }
+.display-2{ font-size: 5.5rem !important; }
+.display-3{ font-size: 4.5rem !important; }
+.display-4{ font-size: 3.5rem !important; }
+
+.display-xs-1,
+.display-xs-2,
+.display-xs-3,
+.display-xs-4 { font-size: inherit; }
+
+.display-sm-1,
+.display-sm-2,
+.display-sm-3,
+.display-sm-4 { font-size: inherit; }
+
+.display-md-1,
+.display-md-2,
+.display-md-3,
+.display-md-4 { font-size: inherit ; }
+
+.display-lg-1,
+.display-lg-2,
+.display-lg-3,
+.display-lg-4 { font-size: inherit; }
+
+.display-xl-1,
+.display-xl-2,
+.display-xl-3,
+.display-xl-4 { font-size: inherit ; }
+
+/* Extra small devices (portrait phones, less than 576px)*/
+/* No media query since this is the default in Bootstrap*/
+
+/* Extra Small devices (landscape phones, 364px and up)*/
+@media (min-width: 364px) {
+  .display-xs-1{ font-size: 1.5rem !important; }
+  .display-xs-2{ font-size: 1.5rem !important; }
+  .display-xs-3{ font-size: 1.5rem !important; }
+  .display-xs-4{ font-size: 1.5rem !important; }
+}
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .display-sm-1{ font-size: 2.0rem !important; }
+  .display-sm-2{ font-size: 2.0rem !important; }
+  .display-sm-3{ font-size: 2.0rem !important; }
+  .display-sm-4{ font-size: 2.0rem !important; }
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+  .display-md-1{ font-size: 5.0rem !important; }
+  .display-md-2{ font-size: 4.5rem !important; }
+  .display-md-3{ font-size: 3.5rem !important; }
+  .display-md-4{ font-size: 2.5rem !important; }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+  .display-lg-1{ font-size: 6.0rem !important; }
+  .display-lg-2{ font-size: 5.5rem !important; }
+  .display-lg-3{ font-size: 4.5rem !important; }
+  .display-lg-4{ font-size: 3.5rem !important; }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  .display-xl-1{ font-size: 6.5rem !important; }
+  .display-xl-2{ font-size: 6.0rem !important; }
+  .display-xl-3{ font-size: 5.0rem !important; }
+  .display-xl-4{ font-size: 4.0rem !important; }
+}

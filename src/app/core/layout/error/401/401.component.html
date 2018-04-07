@@ -1,0 +1,58 @@
+<div *ngIf="!currentView; else alternativeView" class="container mt-1">
+  <div class="rounded jumbotron jumbotron-fluid bg-light">
+    <div class="container">
+      <h1 class="text-center">
+        <img src="../../assets/images/logo_gildemeister.png" width="256" />
+      </h1>
+      <h2 class="display-xs-4 display-sm-4 display-md-4">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-user fa-stack-1x"></i>
+          <i class="fa fa-ban fa-stack-2x text-danger"></i>
+        </span>{{ pageInfo.title }}</h2>
+      <p class="lead">{{ pageInfo.message.primary }}</p>
+      <hr class="my-2">
+      <p class="mb-0">{{ pageInfo.message.secondary }}</p>
+      <p *ngIf="pageInfo.contact">
+        Información de contacto: {{pageInfo.contact.name}} (
+        <i class="fa" [ngClass]="[pageInfo.contact.iconClass ? pageInfo.contact.iconClass: 'fa-phone']"></i>) {{pageInfo.contact.phone}}
+      </p>
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-angle-double-left btn-primary" (click)="goBack()">Regresar
+        </button>
+        <button class="btn btn-primary">
+          <i class="fa fa-gear fa-spin"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #alternativeView>
+  <div class="container mt-1">
+    <div class="rounded jumbotron jumbotron-fluid bg-light">
+      <div class="container">
+        <h1 class="text-center">
+          <i class="text-primary fa fa-2x fa-car mr-2"></i>{{ pageInfo.author }}</h1>
+        <h4 class="display-xs-4 display-sm-4 display-md-4">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-user fa-stack-1x"></i>
+            <i class="fa fa-ban fa-stack-2x text-danger"></i>
+          </span>{{ pageInfo.title }}</h4>
+        <p class="lead">{{ pageInfo.message.primary }}</p>
+        <hr class="my-2">
+        <p class="mb-0">{{ pageInfo.message.secondary }}</p>
+        <p *ngIf="pageInfo.contact">
+          Información de contacto: {{pageInfo.contact.name}} (
+          <i class="fa" [ngClass]="[pageInfo.contact.iconClass ? pageInfo.contact.iconClass: 'fa-phone']"></i>) {{pageInfo.contact.phone}}
+        </p>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-angle-double-left btn-primary" (click)="goBack()">Regresar
+          </button>
+          <button class="btn btn-primary">
+            <i class="fa fa-gear fa-spin"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

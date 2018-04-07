@@ -1,0 +1,650 @@
+<div *ngIf="cliente && cliente?.idCliente" class="container-fluid">
+  <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="d-block mb-2">
+      <div class="float-sm-right">
+        <a [routerLink]="['../detail']" class="btn btn-cancel btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-success py-2" [disabled]="(!is_form_dirty || !is_validated) || isSaving">
+          <i class="fa mr-2" [ngClass]="{
+            'fa-floppy-o': !isSaving,
+            'fa-cog': isSaving,
+            'fa-spin': isSaving
+          }"></i>Guardar
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row d-flex align-items-center">
+          <div class="col col-md-4">
+            <div class="title">
+              <i class="mr-2 fa fa-male"></i> Datos Personales
+            </div>
+          </div>
+          <div class="col-12 col-md-8">
+            <div class="row">
+              <div class="col col-md-6">
+                <label *ngIf="!es_persona_juridica" class="d-block text-left title" for="numeroDocumento">DNI</label>
+                <div *ngIf="es_persona_juridica">
+                  <label class="d-block text-left title" for="numeroDocumento">RUC</label>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.dni }}</p> -->
+                <input id="numeroDocumento" type="text" class="form-control form-control-sm mb-1" formControlName="numeroDocumento" [ngClass]="{
+                'is-invalid': numeroDocumentoControl.invalid && (numeroDocumentoControl.dirty || numeroDocumentoControl.touched),
+                'is-valid': numeroDocumentoControl.valid && (numeroDocumentoControl.dirty || numeroDocumentoControl.touched)
+              }">
+                <div class="invalid-feedback" *ngIf="numeroDocumentoControl.errors && (numeroDocumentoControl.dirty || numeroDocumentoControl.touched)">
+                  <p class="mb-2" *ngIf="numeroDocumentoControl.errors.required">
+                    <small>El campo número de documento es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="numeroDocumentoControl.errors.maxlength">
+                    <small>El campo número de documento debe ser menor a 14 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="!es_persona_juridica">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="nombre">Nombre</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.nombre }}</p> -->
+                <!-- <input id="nombre" name="nombre" type="text" class="form-control form-control-sm mb-1" [(ngModel)]="cliente.nombre"> -->
+                <input id="nombre" type="text" class="form-control form-control-sm mb-1" formControlName="nombre" [ngClass]="{
+                'is-invalid': nombreControl.invalid && (nombreControl.dirty || nombreControl.touched),
+                'is-valid': nombreControl.valid && (nombreControl.dirty || nombreControl.touched)
+              }">
+                <div class="invalid-feedback" *ngIf="nombreControl.errors && (nombreControl.dirty || nombreControl.touched)">
+                  <p class="mb-2" *ngIf="nombreControl.errors.required">
+                    <small>El campo nombre es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="nombreControl.errors.maxlength">
+                    <small>El campo nombre debe ser menor a 80 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="es_persona_juridica">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="razonSocial">Razón Social</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.nombre }}</p> -->
+                <!-- <input id="nombre" name="nombre" type="text" class="form-control form-control-sm mb-1" [(ngModel)]="cliente.nombre"> -->
+                <input id="razonSocial" type="text" class="form-control form-control-sm mb-1" formControlName="razonSocial" [ngClass]="{
+                'is-invalid': razonSocialControl.invalid && (razonSocialControl.dirty || razonSocialControl.touched),
+                'is-valid': razonSocialControl.valid && (razonSocialControl.dirty || razonSocialControl.touched)
+              }">
+                <div class="invalid-feedback" *ngIf="razonSocialControl.errors && (razonSocialControl.dirty || razonSocialControl.touched)">
+                  <p class="mb-2" *ngIf="razonSocialControl.errors.required">
+                    <small>El campo razon social es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="razonSocialControl.errors.maxlength">
+                    <small>El campo nombre debe ser menor a 80 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- No es persona jurididica -->
+            <div *ngIf="!es_persona_juridica">
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="d-block text-left title" for="apellidoPaterno">Apellido Paterno</label>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- <p class="mb-0 text-right">{{ cliente.apellido_paterno }}</p> -->
+                  <input id="apellidoPaterno" type="text" class="form-control form-control-sm mb-1" formControlName="apellidoPaterno" [ngClass]="{
+                      'is-invalid': apelPaternoControl.invalid && (apelPaternoControl.dirty || apelPaternoControl.touched),
+                      'is-valid': apelPaternoControl.valid && (apelPaternoControl.dirty || apelPaternoControl.touched)
+                    }">
+                  <div class="invalid-feedback" *ngIf="apelPaternoControl.errors && (apelPaternoControl.dirty || apelPaternoControl.touched)">
+                    <p class="mb-2" *ngIf="apelPaternoControl.errors.required">
+                      <small>El campo apellido paterno es requerido</small>
+                    </p>
+                    <p class="mb-2" *ngIf="apelPaternoControl.errors.maxlength">
+                      <small>El campo apellido paterno debe ser menor a 60 caracteres</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="d-block text-left title" for="apellidoMaterno">Apellido Materno</label>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- <p class="mb-0 text-right">{{ cliente.apellido_materno }}</p> -->
+                  <input id="apellidoMaterno" type="text" class="form-control form-control-sm mb-1" formControlName="apellidoMaterno" [ngClass]="{
+                      'is-invalid': apelMaternoControl.invalid && (apelMaternoControl.dirty || apelMaternoControl.touched),
+                      'is-valid': apelMaternoControl.valid && (apelMaternoControl.dirty || apelMaternoControl.touched)
+                    }">
+                  <div class="invalid-feedback" *ngIf="apelMaternoControl.errors && (apelMaternoControl.dirty || apelMaternoControl.touched)">
+                    <p class="mb-2" *ngIf="apelMaternoControl.errors.required">
+                      <small>El campo apellido materno es requerido</small>
+                    </p>
+                    <p class="mb-2" *ngIf="apelMaternoControl.errors.maxlength">
+                      <small>El campo apellido materno debe ser menor a 60 caracteres</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="telefono">Teléfono</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.celular }}</p> -->
+                <input appKeyValidator id="telefono" type="text" class="form-control form-control-sm mb-1" formControlName="telefono" [ngClass]="{
+                'is-invalid': telefonoControl.invalid && (telefonoControl.dirty || telefonoControl.touched),
+                'is-valid': telefonoControl.valid && (telefonoControl.dirty || telefonoControl.touched)
+              }">
+                <div class="invalid-feedback" *ngIf="telefonoControl.errors && (telefonoControl.dirty || telefonoControl.touched)">
+                  <p class="mb-2" *ngIf="telefonoControl.errors.required">
+                    <small>El campo teléfono es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="telefonoControl.errors.maxlength">
+                    <small>El campo teléfono debe tener menor a 20 caracteres</small>
+                  </p>
+                  <p class="mb-2" *ngIf="telefonoControl.errors.pattern">
+                    <small>El campo telefono debe ser numerico</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="celular">Celular</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.celular }}</p> -->
+                <input id="celular" type="text" class="form-control form-control-sm mb-1" formControlName="celular" [ngClass]="{
+                'is-invalid': celularControl.invalid && (celularControl.dirty || celularControl.touched),
+                'is-valid': celularControl.valid && (celularControl.dirty || celularControl.touched)
+              }">
+                <div class="invalid-feedback" *ngIf="celularControl.errors && (celularControl.dirty || celularControl.touched)">
+                  <p class="mb-2" *ngIf="celularControl.errors.required">
+                    <small>El campo celular es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="celularControl.errors.maxlength">
+                    <small>El campo celular debe ser menor a 20 caracteres</small>
+                  </p>
+                  <p class="mb-2" *ngIf="celularControl.errors.pattern">
+                    <small>El campo celular debe ser numerico</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="correo">Correo</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.correo }}</p> -->
+                <input id="correo" type="text" class="form-control form-control-sm mb-1" formControlName="correo" [ngClass]="{
+                'is-invalid': correoControl.invalid && (correoControl.dirty || correoControl.touched),
+                'is-valid': correoControl.valid && (correoControl.dirty || correoControl.touched)
+              }">
+                <div class="invalid-feedback" *ngIf="correoControl.errors && (correoControl.dirty || correoControl.touched)">
+                  <p class="mb-2" *ngIf="correoControl.errors.maxlength">
+                    <small>El campo correo debe ser menor a 260 caracteres</small>
+                  </p>
+                  <p class="mb-2" *ngIf="correoControl.errors.pattern">
+                    <small>El formato de correo no es válido</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!es_persona_juridica">
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="d-block text-left title" for="estadoCivil">Estado Civil</label>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- <p class="mb-0 text-right">{{ cliente.estadoCivil }}</p> -->
+                  <select id="estadoCivil" class="custom-select custom-select-sm mb-1" formControlName="estadoCivil" [ngClass]="{
+                      'is-invalid': estadoCivilControl.invalid && (estadoCivilControl.dirty || estadoCivilControl.touched),
+                      'is-valid': estadoCivilControl.valid && (estadoCivilControl.dirty || estadoCivilControl.touched)
+                    }">
+                    <option [value]="selectDefaultValue">Seleccione</option>
+                    <option *ngFor="let estadoCiv of estadoCiviles | async" [value]="estadoCiv.valor2">
+                      {{estadoCiv.valor1}}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="estadoCivilControl.errors && (estadoCivilControl.dirty || estadoCivilControl.touched)">
+                    <p class="mb-2" *ngIf="estadoCivilControl.errors.required">
+                      <small>El campo estado Civil es requerido</small>
+                    </p>
+                    <p class="mb-2" *ngIf="estadoCivilControl.errors.nondefaultvalue">
+                      <small>El campo estado civil es requerido</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="d-block text-left title" for="genero">Sexo</label>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- <p class="mb-0 text-right">{{ cliente.sexo }}</p> -->
+                  <select id="genero" class="custom-select custom-select-sm mb-1" formControlName="codigoGenero" [ngClass]="{
+                      'is-invalid': generoControl.invalid && (generoControl.dirty || generoControl.touched),
+                      'is-valid': generoControl.valid && (generoControl.dirty || generoControl.touched)
+                    }">
+                    <option [value]="selectDefaultValue">Seleccione</option>
+                    <option *ngFor="let genero of generos | async" [value]="genero.valor2">{{genero.valor1}}</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="generoControl.errors && (generoControl.dirty || generoControl.touched)">
+                    <p class="mb-2" *ngIf="generoControl.errors.required">
+                      <small>El campo genero es requerido</small>
+                    </p>
+                    <p class="mb-2" *ngIf="generoControl.errors.nondefaultvalue">
+                      <small>El campo genero es requerido</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="d-block text-left title" for="fechaNacimiento">Fecha de Nacimiento</label>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- <p class="mb-0 text-right">{{ cliente.fechaNacimiento }}</p> -->
+                  <div class="input-group mb-1">
+                    <input ngbDatepicker #d="ngbDatepicker" (maxDate)="current_date" placeholder="dd-mm-yyyy" readonly="readonly" id="fechaNacimiento"
+                      type="text" class="form-control form-control-sm" formControlName="fechaNacimiento" [ngClass]="{
+                        'is-invalid': fechaNacimientoControl.invalid && (fechaNacimientoControl.dirty || fechaNacimientoControl.touched),
+                        'is-valid': fechaNacimientoControl.valid && (fechaNacimientoControl.dirty || fechaNacimientoControl.touched)
+                      }">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary" (click)="d.toggle()" type="button">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </span>
+                  </div>
+                  <div class="invalid-feedback" *ngIf="fechaNacimientoControl.errors && (fechaNacimientoControl.dirty || fechaNacimientoControl.touched)">
+                    <p class="mb-2" *ngIf="fechaNacimientoControl.errors.required">
+                      <small>El campo fecha de Nacimiento es requerido</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ul *ngIf="es_persona_juridica" class="list-group list-group-flush">
+        <li class="list-group-item">
+          <ng-template *ngIf="es_persona_juridica; then direccionSection"></ng-template>
+        </li>
+      </ul>
+
+      <div *ngIf="!es_persona_juridica" class="card-footer bg-transparent">
+        <ng-template *ngIf="!es_persona_juridica; then direccionSection"></ng-template>
+      </div>
+
+      <ng-template #direccionSection>
+        <div class="row d-flex align-items-center">
+          <div class="col col-md-4">
+            <div class="title">
+              <i class="mr-2 fa fa-map-marker"></i> Datos de Dirección
+            </div>
+          </div>
+          <div class="col-12 col-md-8">
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="direccion">Dirección</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.direccion.direccion }}</p> -->
+                <input id="direccion" type="text" class="form-control form-control-sm mb-1" formControlName="direccion" [ngClass]="{
+                        'is-invalid': direccionControl.invalid && (direccionControl.dirty || direccionControl.touched),
+                        'is-valid': direccionControl.valid && (direccionControl.dirty || direccionControl.touched)
+                      }">
+                <div class="invalid-feedback" *ngIf="direccionControl.errors && (direccionControl.dirty || direccionControl.touched)">
+                  <p class="mb-2" *ngIf="direccionControl.errors.required">
+                    <small>El campo dirección es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="direccionControl.errors.maxlength">
+                    <small>El campo dirección debe ser menor a 260 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="pais">País</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <select id="pais" class="custom-select custom-select-sm mb-1" (change)="onPaisChange($event.target.value)" formControlName="idPais"
+                  [ngClass]="{
+                        'is-invalid': paisControl.invalid && (paisControl.dirty || paisControl.touched),
+                        'is-valid': paisControl.valid && (paisControl.dirty || paisControl.touched)
+                      }">
+                  <option [value]="selectDefaultValue">Seleccione</option>
+                  <option *ngFor="let pais of paises | async" [value]="pais.idPais">{{pais.nombre}}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="paisControl.errors && (paisControl.dirty || paisControl.touched)">
+                  <p class="mb-2" *ngIf="paisControl.errors.required">
+                    <small>El campo país es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="paisControl.errors.nondefaultvalue">
+                    <small>El campo país es requerido</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="true">
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="d-block text-left title" for="departamento">Departamento</label>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- <p class="mb-0 text-right">{{ cliente.direccion.departamento }}</p> -->
+                  <select id="departamento" class="custom-select custom-select-sm mb-1" (change)="onDepartamentoChange()" formControlName="departamento"
+                    [ngClass]="{
+                        'is-invalid': departamentoControl.invalid && (departamentoControl.dirty || departamentoControl.touched),
+                        'is-valid': departamentoControl.valid && (departamentoControl.dirty || departamentoControl.touched)
+                      }">
+                    <option [value]="selectDefaultValue">Seleccione</option>
+                    <option *ngFor="let departamento of departamentos | async" [value]="departamento.codigo">
+                      {{departamento.nombre}}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="departamentoControl.errors && (departamentoControl.dirty || departamentoControl.touched)">
+                    <p class="mb-2" *ngIf="departamentoControl.errors.required">
+                      <small>El campo departamento es requerido</small>
+                    </p>
+                    <p class="mb-2" *ngIf="departamentoControl.errors.nondefaultvalue">
+                      <small>El campo departamento es requerido</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="d-block text-left title" for="provincia">Provincia</label>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- <p class="mb-0 text-right">{{ cliente.direccion.provincia }}</p> -->
+                  <select id="provincia" class="custom-select custom-select-sm mb-1" (change)="onProvinciaChange()" formControlName="provincia"
+                    [ngClass]="{
+                        'is-invalid': provinciaControl.invalid && (provinciaControl.dirty || provinciaControl.touched),
+                        'is-valid': provinciaControl.valid && (provinciaControl.dirty || provinciaControl.touched)
+                      }">
+                    <option [value]="selectDefaultValue">Seleccione</option>
+                    <option *ngFor="let provincia of provincias | async" [value]="provincia.codigo">{{provincia.nombre}}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="provinciaControl.errors && (provinciaControl.dirty || provinciaControl.touched)">
+                    <p class="mb-2" *ngIf="provinciaControl.errors.required">
+                      <small>El campo provincia es requerido</small>
+                    </p>
+                    <p class="mb-2" *ngIf="provinciaControl.errors.nondefaultvalue">
+                      <small>El campo provincia es requerido</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="d-block text-left title" for="distrito">Distrito</label>
+                </div>
+                <div class="co-12 col-md-6">
+                  <!-- <p class="mb-0 text-right">{{ cliente.direccion.distrito }}</p> -->
+                  <select id="distrito" class="custom-select custom-select-sm mb-1" formControlName="distrito" [ngClass]="{
+                        'is-invalid': distritoControl.invalid && (distritoControl.dirty || distritoControl.touched),
+                        'is-valid': distritoControl.valid && (distritoControl.dirty || distritoControl.touched)
+                      }">
+                    <option [value]="selectDefaultValue">Seleccione</option>
+                    <option *ngFor="let distrito of distritos | async" [value]="distrito.codigo">{{distrito.nombre}}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="distritoControl.errors && (distritoControl.dirty || distritoControl.touched)">
+                    <p class="mb-2" *ngIf="distritoControl.errors.required">
+                      <small>El campo distrito es requerido</small>
+                    </p>
+                    <p class="mb-2" *ngIf="distritoControl.errors.nondefaultvalue">
+                      <small>El campo distrito es requerido</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="codigoPostal">Código Postal</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <input id="codigoPostal" type="text" class="form-control form-control-sm mb-1" formControlName="codigoPostal" [ngClass]="{
+                        'is-invalid': codigoPostalControl.invalid && (codigoPostalControl.dirty || codigoPostalControl.touched),
+                        'is-valid': codigoPostalControl.valid && (codigoPostalControl.dirty || codigoPostalControl.touched)
+                      }">
+                <div class="invalid-feedback" *ngIf="codigoPostalControl.errors && (codigoPostalControl.dirty || codigoPostalControl.touched)">
+                  <p class="mb-2" *ngIf="codigoPostalControl.errors.required">
+                    <small>El campo código postal es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="codigoPostalControl.errors.maxlength">
+                    <small>El campo código postal debe ser menor a 12 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </ng-template>
+
+      <div *ngIf="es_persona_juridica" class="card-body">
+        <div formGroupName="contacto" class="row d-flex align-items-center">
+          <div class="col col-md-4">
+            <div class="title">
+              <i class="mr-2 fa fa-map-marker"></i> Datos de Contacto
+            </div>
+          </div>
+          <div class="col-12 col-md-8">
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="contactoNumeroDocumento">DNI</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.dni }}</p> -->
+                <input id="contactoNumeroDocumento" type="text" class="form-control form-control-sm mb-1" formControlName="numeroDocumento"
+                  readonly="true" [ngClass]="{
+                    'is-invalid': contactoNumeroDocControl.invalid && (contactoNumeroDocControl.dirty || contactoNumeroDocControl.touched),
+                    'is-valid': contactoNumeroDocControl.valid && (contactoNumeroDocControl.dirty || contactoNumeroDocControl.touched)
+                  }">
+                <div class="invalid-feedback" *ngIf="contactoNumeroDocControl.errors && (contactoNumeroDocControl.dirty || contactoNumeroDocControl.touched)">
+                  <p class="mb-2" *ngIf="contactoNumeroDocControl.errors.required">
+                    <small>El campo número de documento es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="contactoNumeroDocControl.errors.maxlength">
+                    <small>El campo número de documento debe ser menor a 8 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="contactoNombre">Nombre</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.nombre }}</p> -->
+                <!-- <input id="nombre" name="nombre" type="text" class="form-control form-control-sm mb-1" [(ngModel)]="cliente.nombre"> -->
+                <input id="contactoNombre" type="text" class="form-control form-control-sm mb-1" formControlName="nombre" readonly="readonly"
+                  [ngClass]="{
+                    'is-invalid': contactoNombreControl.invalid && (contactoNombreControl.dirty || contactoNombreControl.touched),
+                    'is-valid': contactoNombreControl.valid && (contactoNombreControl.dirty || contactoNombreControl.touched)
+                  }">
+                <div class="invalid-feedback" *ngIf="contactoNombreControl.errors && (contactoNombreControl.dirty || contactoNombreControl.touched)">
+                  <p class="mb-2" *ngIf="contactoNombreControl.errors.required">
+                    <small>El campo nombre es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="contactoNombreControl.errors.maxlength">
+                    <small>El campo nombre debe ser menor a 80 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="contactoApellidoPaterno">Apellido Paterno</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.apellido_paterno }}</p> -->
+                <input id="contactoApellidoPaterno" type="text" class="form-control form-control-sm mb-1" readonly="readonly" formControlName="apellidoPaterno"
+                  [ngClass]="{
+                          'is-invalid': contactoApelPaternoControl.invalid && (contactoApelPaternoControl.dirty || contactoApelPaternoControl.touched),
+                          'is-valid': contactoApelPaternoControl.valid && (contactoApelPaternoControl.dirty || contactoApelPaternoControl.touched)
+                        }">
+                <div class="invalid-feedback" *ngIf="contactoApelPaternoControl.errors && (contactoApelPaternoControl.dirty || contactoApelPaternoControl.touched)">
+                  <p class="mb-2" *ngIf="contactoApelPaternoControl.errors.required">
+                    <small>El campo apellido paterno es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="contactoApelPaternoControl.errors.maxlength">
+                    <small>El campo apellido paterno debe ser menor a 60 caracteres
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="contactoApellidoMaterno">Apellido Materno</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.apellido_materno }}</p> -->
+                <input id="contactoApellidoMaterno" type="text" class="form-control form-control-sm mb-1" readonly="readonly" formControlName="apellidoMaterno"
+                  [ngClass]="{
+                          'is-invalid': contactoApelMaternoControl.invalid && (contactoApelMaternoControl.dirty || contactoApelMaternoControl.touched),
+                          'is-valid': contactoApelMaternoControl.valid && (contactoApelMaternoControl.dirty || contactoApelMaternoControl.touched)
+                        }">
+                <div class="invalid-feedback" *ngIf="contactoApelMaternoControl.errors && (contactoApelMaternoControl.dirty || contactoApelMaternoControl.touched)">
+                  <p class="mb-2" *ngIf="contactoApelMaternoControl.errors.required">
+                    <small>El campo apellido aaterno es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="contactoApelMaternoControl.errors.maxlength">
+                    <small>El campo apellido materno debe ser menor a 60 caracteres
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="sexoContacto">Sexo</label>
+              </div>
+              <div class="co-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.direccion.distrito }}</p> -->
+                <select id="sexoContacto" class="custom-select custom-select-sm mb-1" formControlName="sexoContacto" [ngClass]="{
+                        'is-invalid': sexoContactoControl.invalid && (sexoContactoControl.dirty || sexoContactoControl.touched),
+                        'is-valid': sexoContactoControl.valid && (sexoContactoControl.dirty || sexoContactoControl.touched)
+                      }">
+                  <option [value]="selectDefaultValue">Seleccione</option>
+                  <option *ngFor="let genero of generos | async" [value]="genero.valor2">{{genero.valor1}}
+                  </option>
+                </select>
+                <div class="invalid-feedback" *ngIf="sexoContactoControl.errors && (sexoContactoControl.dirty || sexoContactoControl.touched)">
+                  <p class="mb-2" *ngIf="sexoContactoControl.errors.required">
+                    <small>El campo sexo es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="sexoContactoControl.errors.nondefaultvalue">
+                    <small>El campo sexo es requerido</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="telefonoContacto">Teléfono</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.celular }}</p> -->
+                <input id="telefonoContacto" type="text" class="form-control form-control-sm mb-1" formControlName="telefono" [ngClass]="{
+                    'is-invalid': contactoTelefonoControl.invalid && (contactoTelefonoControl.dirty || contactoTelefonoControl.touched),
+                    'is-valid': contactoTelefonoControl.valid && (contactoTelefonoControl.dirty || contactoTelefonoControl.touched)
+                  }">
+                <div class="invalid-feedback" *ngIf="contactoTelefonoControl.errors && (contactoTelefonoControl.dirty || contactoTelefonoControl.touched)">
+                  <p class="mb-2" *ngIf="contactoTelefonoControl.errors.required">
+                    <small>El campo teléfono es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="contactoTelefonoControl.errors.maxlength">
+                    <small>El campo teléfono debe ser menor 14 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="contactoCelular">Celular</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.celular }}</p> -->
+                <input id="contactoCelular" type="text" class="form-control form-control-sm mb-1" formControlName="celular" [ngClass]="{
+                    'is-invalid': contactoCelularControl.invalid && (contactoCelularControl.dirty || contactoCelularControl.touched),
+                    'is-valid': contactoCelularControl.valid && (contactoCelularControl.dirty || contactoCelularControl.touched)
+                  }">
+                <div class="invalid-feedback" *ngIf="contactoCelularControl.errors && (contactoCelularControl.dirty || contactoCelularControl.touched)">
+                  <p class="mb-2" *ngIf="contactoCelularControl.errors.required">
+                    <small>El campo celular es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="contactoCelularControl.errors.maxlength">
+                    <small>El campo celular debe ser menor 14 caracteres</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-md-6">
+                <label class="d-block text-left title" for="contactoCorreo">Correo</label>
+              </div>
+              <div class="col-12 col-md-6">
+                <!-- <p class="mb-0 text-right">{{ cliente.correo }}</p> -->
+                <input id="contactoCorreo" type="text" class="form-control form-control-sm mb-1" formControlName="correoContacto" [ngClass]="{
+                    'is-invalid': contactoCorreoControl.invalid && (contactoCorreoControl.dirty || contactoCorreoControl.touched),
+                    'is-valid': contactoCorreoControl.valid && (contactoCorreoControl.dirty || contactoCorreoControl.touched)
+                  }">
+                <div class="invalid-feedback" *ngIf="contactoCorreoControl.errors && (contactoCorreoControl.dirty || contactoCorreoControl.touched)">
+                  <p class="mb-2" *ngIf="contactoCorreoControl.errors.maxlength">
+                    <small>El campo correo debe ser menor a 260 caracteres</small>
+                  </p>
+                  <p class="mb-2" *ngIf="contactoCorreoControl.errors.required">
+                    <small>El campo correo es requerido</small>
+                  </p>
+                  <p class="mb-2" *ngIf="contactoCorreoControl.errors.pattern">
+                    <small>El formato de correo no es válido</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="loading === true">
+  <div class="alert alert-primary m-0" role="alert">
+    <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw mr-2"></i>Cargando Información de Cliente ...
+  </div>
+</div>
+
+<div *ngIf="error && error?.state === true">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{error?.title}} ({{error?.codigo}})</strong> {{error?.message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>

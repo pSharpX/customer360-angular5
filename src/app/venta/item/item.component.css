@@ -1,0 +1,11 @@
+:host{
+  display: block;
+  position: relative;
+}
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  /* IE10+ specific styles go here */
+  .ie-btn-sm {
+    padding: .25rem .5rem !important;
+  }
+}

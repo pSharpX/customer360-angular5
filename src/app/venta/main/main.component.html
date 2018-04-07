@@ -1,0 +1,325 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h6 class="float-left title fc-primary my-4">
+        <i class="fa fa-shopping-bag mr-2"></i>Ventas y Servicios</h6>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-2 mb-1">
+  <div class="d-flex flex-column flex-md-row justify-content-between">
+    <div class="d-flex align-items-start justify-content-start mb-2">
+      <div class="btn-group btn-group-toggle btn-group-sm" data-toggle="buttons" role="group">
+        <label class="btn btn-success" for="tableMode" [ngClass]="{ 'active': (ventaViewMode === 'table') }" (click)="ventaViewMode = 'table'">
+          <input type="radio" name="options" id="tableMode" (ngModel)="ventaViewMode" value="table" [checked]="ventaViewMode === 'table'">
+          <i class="fa fa-th"></i>
+        </label>
+        <label class="btn btn-success" for="listMode" [ngClass]="{ 'active': (ventaViewMode === 'list') }" (click)="ventaViewMode = 'list'">
+          <input type="radio" name="options" id="listMode" (ngModel)="ventaViewMode" value="list" [checked]="ventaViewMode === 'list'">
+          <i class="fa fa-th-list"></i>
+        </label>
+      </div>
+    </div>
+    <div class="d-flex align-items-end justify-content-between justify-content-md-end mb-2">
+      <div class="mr-4 pb-2">
+        <p class="d-inline"><i class="d-none d-md-inline fa fa-th mr-2"></i>{{(ventas | async)?.length}} Resultados</p>
+        <!-- <div class="btn-group btn-group-sm" role="group">
+          <button role="button" class="btn btn-link">
+            <span class="ml-2 badge badge-dark">{{(ventas | async)?.length}}</span>
+          </button>
+        </div> -->
+      </div>
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" [disabled]="(ventas | async)?.length === 0 || isVentasProcessing || isLoadingVentas" class="btn btn-primary" (click)="exportVentasTo()">
+          <i class="fa" [ngClass]="{
+                      'fa-download': !isVentasProcessing,
+                      'fa-cog': isVentasProcessing,
+                      'fa-spin': isVentasProcessing
+                    }"></i>
+          <span class="d-none d-md-inline ml-2">Exportar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" [ngClass]="{
+  'card': (ventaViewMode === 'table'),
+  'card-columns': (ventaViewMode === 'list')
+}">
+  <div *ngIf="ventaViewMode === 'table'" class="card-body pb-0">
+    <div class="row">
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="v_descripcion">Actuales
+            <input type="checkbox" id="v_descripcion" class="d-none" (change)="sortVentas('nombreComercial')" [(ngModel)]="ventaOrders.nombreComercial">
+            <i class="fa ml-2" [ngClass]="{
+              'fa-chevron-down': ventaOrders.nombreComercial,
+              'fa-chevron-up': !ventaOrders.nombreComercial
+            }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="v_codigo">Cod
+            <input type="checkbox" id="v_codigo" class="d-none" (change)="sortVentas('numeroNotaPedido')" [(ngModel)]="ventaOrders.numeroNotaPedido">
+            <i class="fa ml-2" [ngClass]="{
+              'fa-chevron-down': ventaOrders.numeroNotaPedido,
+              'fa-chevron-up': !ventaOrders.numeroNotaPedido
+            }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="v_tipo">Tipo
+            <input type="checkbox" id="v_tipo" class="d-none" (change)="sortVentas('nombreTipoVenta')" [(ngModel)]="ventaOrders.nombreTipoVenta">
+            <i class="fa ml-2" [ngClass]="{
+              'fa-chevron-down': ventaOrders.nombreTipoVenta,
+              'fa-chevron-up': !ventaOrders.nombreTipoVenta
+            }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="v_fecha_facturacion">Fecha Facturación
+            <input type="checkbox" id="v_fecha_facturacion" class="d-none" (change)="sortVentas('fechaFacturacion')" [(ngModel)]="ventaOrders.fechaFacturacion">
+            <i class="fa ml-2" [ngClass]="{
+              'fa-chevron-down': ventaOrders.fechaFacturacion,
+              'fa-chevron-up': !ventaOrders.fechaFacturacion
+            }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="v_fecha_entrega">Fecha Entrega
+            <input type="checkbox" id="v_fecha_entrega" class="d-none" (change)="sortVentas('fechaEntrega')" [(ngModel)]="ventaOrders.fechaEntrega">
+            <i class="fa ml-2" [ngClass]="{
+              'fa-chevron-down': ventaOrders.fechaEntrega,
+              'fa-chevron-up': !ventaOrders.fechaEntrega
+            }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="v_estado">Estado
+            <input type="checkbox" id="v_estado" class="d-none" (change)="sortVentas('estadoDespacho')" [(ngModel)]="ventaOrders.estadoDespacho">
+            <i class="fa ml-2" [ngClass]="{
+              'fa-chevron-down': ventaOrders.estadoDespacho,
+              'fa-chevron-up': !ventaOrders.estadoDespacho
+            }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col-12 col-md">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <label class="col-header" for="v_fecha_estado">Fecha Estado
+            <input type="checkbox" id="v_fecha_estado" class="d-none" (change)="sortVentas('fechaEstimacionDespacho')" [(ngModel)]="ventaOrders.fechaEstimacionDespacho">
+            <i class="fa ml-2" [ngClass]="{
+              'fa-chevron-down': ventaOrders.fechaEstimacionDespacho,
+              'fa-chevron-up': !ventaOrders.fechaEstimacionDespacho
+            }"></i>
+          </label>
+        </p>
+      </div>
+      <div class="col col-md">
+        <p class="text-center mb-1">
+          <span>
+            <i class="fa fa-bars"></i>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="(ventas | async)?.length === 0">
+    <div [@routeAnimation] [ngClass]="{
+      'border-top-0': (ventaViewMode !== 'table'),
+      'card-body': (ventaViewMode === 'table'),
+      'card': (ventaViewMode === 'list'),
+      'p-3': (ventaViewMode === 'table'),
+      'border': (ventaViewMode === 'table'),
+      'border-left-0': (ventaViewMode === 'table'),
+      'border-right-0': (ventaViewMode === 'table'),
+      'border-bottom-0': (ventaViewMode === 'table')
+    }">
+      <div class="alert alert-light m-0" role="alert">
+        No se encontraron registros de Ventas para este cliente.
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isLoadingVentas">
+    <div [@routeAnimation] [ngClass]="{
+      'border-top-0': (ventaViewMode !== 'table'),
+      'card-body': (ventaViewMode === 'table'),
+      'card': (ventaViewMode === 'list'),
+      'p-3': (ventaViewMode === 'table'),
+      'border': (ventaViewMode === 'table'),
+      'border-left-0': (ventaViewMode === 'table'),
+      'border-right-0': (ventaViewMode === 'table'),
+      'border-bottom-0': (ventaViewMode === 'table')
+    }">
+      <div class="alert alert-primary m-0" role="alert">
+        <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw mr-2"></i>Cargando Ventas...
+      </div>
+    </div>
+  </ng-container>
+
+  <app-venta-item *ngFor="let item of _paginatedVentas | async" [ngClass]="{
+    'card-body': (ventaViewMode === 'table'),
+    'card': (ventaViewMode === 'list'),
+    'border-info': (ventaViewMode === 'list'),
+    'p-3': (ventaViewMode === 'table'),
+    'border': (ventaViewMode === 'table'),
+    'border-left-0': (ventaViewMode === 'table'),
+    'border-right-0': (ventaViewMode === 'table'),
+    'border-bottom-0': (ventaViewMode === 'table')
+  }" [value]="item" [defaultView]="ventaViewMode"></app-venta-item>
+
+  <!-- <div *ngIf="viewMode === 'table'" class="card-footer bg-transparent">
+    <a href="#" class="card-link">Paginations links</a>
+    <a href="#" class="card-link">Another link</a>
+  </div> -->
+</div>
+
+<div class="container mt-2 mb-1">
+  <div class="btn-toolbar mb-3 d-flex flex-row flex-md-row justify-content-between justify-content-md-end" role="toolbar">
+    <div class="btn-group btn-group-sm mt-2 mt-md-0" role="group">
+      <button class="btn btn-angle-double-left btn-pagination border" [disabled]="(currentPagVentas.page < 2) || isLoadingVentas" (click)="paginateVentas(ventas, 1)"></button>
+      <button class="btn btn-angle-left btn-pagination border" [disabled]="(currentPagVentas.page < 2) || isLoadingVentas" (click)="paginateVentas(ventas, currentPagVentas.page - 1)"></button>
+      <button class="btn btn-pagination border" [ngClass]="['d-none', 'd-md-block']" [disabled]="currentPagVentas.page === page" *ngFor="let page of ventaPages"
+        (click)="paginateVentas(ventas, page)">{{page}}</button>
+      <button class="btn btn-angle-right btn-pagination border" [disabled]="(currentPagVentas.page >= currentPagVentas.total_pages) || isLoadingVentas"
+        (click)="paginateVentas(ventas, currentPagVentas.page + 1)"></button>
+      <button class="btn btn-angle-double-right btn-pagination border" [disabled]="(currentPagVentas.page >= currentPagVentas.total_pages) || isLoadingVentas" (click)="paginateVentas(ventas, currentPagVentas.total_pages)"></button>
+    </div>
+    <!-- <div class="input-group d-md-none w-75 mt-2 mt-md-0">
+      <input #vtgoto type="text" class="form-control" placeholder="Saltar a página" aria-describedby="btnGroupAddon">
+      <button class="input-group-addon btn btn-primary" id="btnGroupAddon" (click)="goToVentaPage(vtgoto.value)">
+        <i class="text-white fa fa-arrow-circle-left "></i>
+      </button>
+    </div> -->
+  </div>
+</div>
+
+
+<div class="container mt-5">
+  <div class="row">
+    <!-- <div class="col">
+      <h6 class="float-left title fc-primary my-4">Ventas y Servicios</h6>
+    </div> -->
+    <div class="col-12 col-md-12 d-flex align-items-end justify-content-end mb-2">
+      <div class="btn-group btn-group-sm" role="group">
+        <button class="btn btn-before btn-primary"></button>
+        <button class="btn btn-next btn-primary"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body pb-0">
+    <div class="row">
+      <div class="col-12 col-md-2">
+        <p class="title text-left mb-1">
+          <span class="col-header">Historial
+            <i class="fa fa-chevron-down ml-2"></i>
+          </span>
+        </p>
+      </div>
+      <div class="col-12 col-md-1">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <span class="col-header">Cod
+            <i class="fa fa-chevron-down ml-2"></i>
+          </span>
+        </p>
+      </div>
+      <div class="col-12 col-md-1">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <span class="col-header">Tipo
+            <i class="fa fa-chevron-down ml-2"></i>
+          </span>
+        </p>
+      </div>
+      <div class="col-12 col-md-2">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <span class="col-header">Fecha Facturación
+            <i class="fa fa-chevron-down ml-2"></i>
+          </span>
+        </p>
+      </div>
+      <div class="col-12 col-md-2">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <span class="col-header">Fecha Entrega
+            <i class="fa fa-chevron-down ml-2"></i>
+          </span>
+        </p>
+      </div>
+      <div class="col-12 col-md-1">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <span class="col-header">Estado
+            <i class="fa fa-chevron-down ml-2"></i>
+          </span>
+        </p>
+      </div>
+      <div class="col-12 col-md-1">
+        <p class="text-uppercase font-weight-bold mb-1" style="font-size: 10px; ">
+          <span class="col-header">Fecha Estado
+            <i class="fa fa-chevron-down ml-2"></i>
+          </span>
+        </p>
+      </div>
+      <div class="col-1 col-md-auto">
+        <p class="text-center mb-1">
+          <span>
+            <i class="fa fa-bars"></i>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <ng-template *ngIf="(historial !== null && historial.length > 0)">
+    <p>There is not items</p>
+  </ng-template>
+
+  <div *ngFor="let item of historial; let i = index" class="card-body border border-left-0 border-right-0 border-bottom-0">
+    <div class="row">
+      <div class="col-12 col-md-2">
+        <p class="title mb-1">{{item.descripcion}}</p>
+      </div>
+      <div class="col-12 col-md-1">
+        <p class="mb-1">{{item.codigo}}</p>
+      </div>
+      <div class="col-12 col-md-1">
+        <p class="mb-1">{{item.tipo}}</p>
+      </div>
+      <div class="col-12 col-md-2">
+        <p class="mb-1">{{item.fecha_facturacion}}</p>
+      </div>
+      <div class="col-12 col-md-2">
+        <p class="mb-1">{{item.fecha_entrega}}</p>
+      </div>
+      <div class="col-12 col-md-1">
+        <p class="mb-1">{{item.estado}}</p>
+      </div>
+      <div class="col-12 col-md-1">
+        <p class="mb-2">{{item.fecha_estado}}</p>
+      </div>
+      <div class="col col-md-auto">
+        <a class="btn btn-detail btn-primary" role="button" [routerLink]="[i, 'detail']" routerLinkActive="active">Ver Detalle</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer bg-transparent">
+    <a href="#" class="card-link">Paginations links</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>

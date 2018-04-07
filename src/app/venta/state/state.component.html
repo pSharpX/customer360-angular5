@@ -1,0 +1,96 @@
+<div class="card-group">
+  <div class="card col-12 col-md-5 px-0">
+    <div *ngIf="item" class="card-body">
+      <div class="row">
+        <div class="col">
+          <h4 class="card-title title">{{ descripcion }}</h4>
+          <p class="text-left">Codigo {{ item?.numeroNotaPedido}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Vin:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.vin }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Fecha de Entrega:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.fechaEntrega }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Accesorios:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.accesorios }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Asesor:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.nombreAsesor }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">N° de Factura:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.comprobanteNumero }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card col-12 col-md-7 px-0">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Estado:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.estadoDespacho }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Gestor:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.gestor }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Fecha Solicitud PDI:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.fechaSolicitudPDI }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Fecha Inicio PDI:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.fechaEstimacionInicioPDI }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Fecha Estimada de Fin:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p class="mb-0 text-left text-md-right">{{ item?.fechaFinPDI }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

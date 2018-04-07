@@ -1,0 +1,144 @@
+a:hover{
+    text-decoration: none;
+  }
+  
+  .backgroundSearch{
+  
+  }
+  
+  .lineaSeparador{
+      width: 97%;
+  }
+  
+  .separador{
+      height:5px;
+  }
+  
+  .card:hover{
+    transition: 300ms ease-in-out all;
+    border-color: #007bff!important;
+    background-color: #007bff!important;
+    color: #fff;
+  }
+  
+  .paginacion{
+      margin-left: 85%;
+  }
+  
+  .titleSearch{
+      font-weight: bold;
+      text-transform: uppercase;
+      color: rgb(61, 60, 60);
+      margin-bottom: 1px;
+      width: 100%;
+      margin-left: 1.5%;
+  }
+  
+  .imgcantRegistros{
+      width: 19px;
+      position: absolute;
+      margin-left: -20px;
+  }
+  
+  .labelCantRegistros{
+      font-family: inherit;
+      font-size: smaller;
+      font-weight: bold;
+  }
+  
+  .container {
+      height: 100%;
+      width:100%;
+      font-size:0;
+  }
+  
+  .columnaSearch {
+      display: inline-block;
+      *display: inline;
+      zoom: 1;
+      vertical-align: top;
+      font-size: 12px;
+  }
+  
+  .col15p{
+      width: 15%;
+  }
+  
+  .col25p{
+      width: 25%;
+  }
+  
+  .col35p{
+      width: 35%;
+  }
+  
+  .col50p{
+      width: 50%;
+  }
+  
+  .col40p{
+      width: 40%;
+  }
+  
+  .col20p{
+      width: 20%;
+  }
+  
+  .col30p{
+      width: 30%;
+  }
+  
+  .col10p{
+      width: 10%;
+  }
+  
+  .col5p{
+      width: 5%;
+  }
+  
+  .headerColumna{
+      padding: 3.25rem;
+      height: 100%;
+      width:100%;
+      font-size:0;
+      padding-top: 0px;
+      padding-bottom: 20px;
+      text-transform: uppercase;
+      padding-left: 30px;
+  }
+  
+  .headerColumna p{
+      font-size: x-small;
+      font-weight: bold;
+  }
+  
+  .arrow_order {
+      width: 12px;
+      margin-left: 80px;
+      position: absolute;
+      cursor: pointer;
+  }
+  
+  .excel {
+      left: 97%;
+      position: relative;
+      cursor: pointer;
+  }
+  
+  .exportar{
+      font-size: small;
+      font-weight: bold;
+      cursor: pointer;
+  }
+  
+  .demo{
+      background-color: blue;
+    }
+  
+  
+  .contraertexto{
+    width: 120px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }

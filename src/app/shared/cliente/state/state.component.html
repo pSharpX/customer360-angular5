@@ -1,0 +1,89 @@
+<h4 class="title">DETALLE DE CLIENTE</h4>
+<hr>
+<ng-template #errorBlock>
+  <div *ngIf="error">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>{{error?.title}} ({{error?.codigo}})</strong> {{error?.message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<div *ngIf="error?.state === false; else errorBlock" class="card-group">
+  <div class="card col-12 col-md-5 px-0">
+    <ng-template #loadingBlock>
+      <span class="loading-container d-block d-flex flex-row-reverse"><i class="fa fa-2x fa-gear fa-spin"></i></span>
+    </ng-template>
+    <div class="card-body">
+      <div *ngIf="loading === false" class="pb-2 pb-md-4">
+        <h4 class="card-title title" *ngIf="!es_persona_juridica">{{ cliente.nombreCompleto }}</h4>
+        <h4 class="card-title title" *ngIf="es_persona_juridica">{{ cliente.razonSocial }}</h4>
+      </div>
+      <span *ngIf="loading === true" class="pb-2 pb-md-4 loading-container d-block d-flex flex-row"><i class="fa fa-gear fa-spin"></i></span>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">DNI/RUC:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p *ngIf="loading === false" class="d-block mb-0 text-left text-md-right">{{ cliente.numeroDocumento }}</p>
+          <span *ngIf="loading === true" class="loading-container d-block d-flex flex-row flex-md-row-reverse"><i class="fa fa-gear fa-spin"></i></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">TEL/CELULAR:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p *ngIf="loading === false" class="d-block mb-0 text-left text-md-right">{{ cliente.celular }}</p>
+          <span *ngIf="loading === true" class="loading-container d-block d-flex flex-row flex-md-row-reverse"><i class="fa fa-gear fa-spin"></i></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">Correo:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p *ngIf="loading === false" class="d-block mb-0 text-left text-md-right">{{ cliente.correo }}</p>
+          <span *ngIf="loading === true" class="loading-container d-block d-flex flex-row flex-md-row-reverse"><i class="fa fa-gear fa-spin"></i></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <p class="mb-0 text-left title">ASESOR DE VENTAS:</p>
+        </div>
+        <div class="col-12 col-md-7">
+          <p *ngIf="loading === false" class="d-block mb-0 text-left text-md-right">{{ cliente.asesor }}</p>
+          <span *ngIf="loading === true" class="loading-container d-block d-flex flex-row flex-md-row-reverse"><i class="fa fa-gear fa-spin"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-transparent">
+      <h6 class="title">
+        <i class="mr-3 fa fa-trophy"></i> Cliente Preferencial</h6>
+    </div>
+  </div>
+
+  <div class="card col-12 col-md-7">
+    <div class="card-body p-1 p-md-4">
+      <img class="img-fluid" src="/assets/images/detalle_ejemplo.PNG" alt="Responsive timeline image">
+      <h6 class="card-text title ml-0 ml-md-2">Último Servicio</h6>
+      <div class="container">
+        <div class="row">
+          <div class="col px-0 px-md-2 text-left">{{ ultimoServicio.descripcion }}</div>
+        </div>
+        <div class="row">
+          <div class="col px-0 px-md-2 text-left">{{ ultimoServicio.lugar }}</div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6 px-0 px-md-2">
+            <p class="mb-0 text-left">PEDIDO EL {{ ultimoServicio.fecha }}</p>
+          </div>
+          <div class="col-12 col-md-6 px-0 px-md-2">
+            <p class="mb-0 text-left text-md-right">{{ ultimoServicio.fechaUltimaActualizacion }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+.modal-overlay{
+    background-color:rgba(0,0,0,.4);
+    bottom:0;
+    left:0;
+    position:fixed;
+    right:0;
+    top:0;
+    z-index:1000
+  }
+  
+  .closed .messageBoxAdv{
+    top:-200%
+  }
+  
+  .closed .modal-overlay{
+    display:none
+  }
+  
+  .messageBoxAdv{
+    box-shadow:0 12px 15px 0 rgba(0,0,0,.22),0 17px 20px 0 rgba(0,0,0,.12);
+    background-color:#fff;
+    max-height:calc(100% - 10em);
+    position:fixed;
+    top:5em;
+    width:73%;
+    z-index:1100;
+    transition:all .5s ease;
+    top: 14%;
+    left: 14%;
+  }
+  
+  .messageBoxAdv .title{
+    background-color:#006BB9;
+    text-align:center;
+    color:#fff;
+    line-height:40px
+  }
+  
+  .messageBoxAdv .title .right-align{
+    position:absolute;
+    right:5px
+  }
+  
+  .messageBoxAdv .title .right-align, .messageBoxAdv .title .right-align  i{
+    line-height:40px
+  }
+  
+  .messageBoxAdv .title .right-align:hover{
+    cursor:pointer;
+    -webkit-transform:scale(1.1);
+    transform:scale(1.1)
+  }
+  
+  .messageBoxAdv .body{
+    padding:1.2em;
+    text-align: center;
+  }
+
+  
+fieldset.scheduler-border {
+  border: 1px solid #dddddd;
+  border-radius: 14px;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  /* -webkit-box-shadow:  0px 0px 0px 0px #ffffff;
+   box-shadow:  0px 0px 0px 0px #c2c2c2;*/
+}
+
+legend.scheduler-border {
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  width: auto;
+  padding: 0 10px;
+  border-bottom: none;
+}
+
+
+.form-group {
+  margin-bottom: 0.1rem;
+}

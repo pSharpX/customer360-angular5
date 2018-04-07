@@ -1,0 +1,84 @@
+<ng-container *ngIf="defaultView === 'list'">
+  <div [@routeAnimation] class="card-body">
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Fecha</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.fechaPruebaManejo}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Marca</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.nombreMarca}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Modelo</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.nombreModelo}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Version</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.codigoFamiliaCorto}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Punto de Venta</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.asesorPuntoVenta}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <p class="mb-0 card-text title">Asesor Comercial</p>
+      </div>
+      <div class="col-12 col-md-7">
+        <p class="mb-0 card-text text-left text-md-right">{{item.nombreAsesor}}</p>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="card-footer bg-transparent">
+        <a class="btn btn-detail btn-primary btn-sm" role="button" [routerLink]="[item?.idCotizacion, 'detail']" routerLinkActive="active">Ver Detalle</a>
+      </div> -->
+</ng-container>
+
+<ng-container *ngIf="defaultView === 'table'">
+  <div [@routeAnimation] class="row">
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.fechaPruebaManejo}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.nombreMarca}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.nombreModelo}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.codigoFamiliaCorto}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.nombreAsesor}}</p>
+    </div>
+    <div class="col-12 col-md">
+      <p class="mb-1">{{item.asesorPuntoVenta}}</p>
+    </div>
+    <!-- <div class="col col-md-auto">
+        <a class="btn btn-detail btn-primary btn-sm" role="button" [routerLink]="[item?.idCotizacion, 'detail']" routerLinkActive="active">Ver Detalle</a>
+      </div> -->
+  </div>
+</ng-container>
+<ng-container *ngIf="defaultView === 'thumbnail'">
+
+</ng-container>
